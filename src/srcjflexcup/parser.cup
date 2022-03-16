@@ -1,0 +1,170 @@
+terminal ASSIGN, PLUS, MINUS, TIMES, GT, GE, LT, LE, EQ, NE, POW, STR_CONCAT, AND, OR;
+
+terminal IF, THEN, ELSE, WHILE,LOOP;
+
+terminal INTEGER_CONST, REAL_CONST, STRING_CONST, TRUE, FALSE, NOT;
+
+terminal LPAR, RPAR, SEMI, COMMA,  COLON, END;
+
+terminal INTEGER, REAL, STRING, BOOL, VAR;
+
+terminal FUN, OUT, MAIN;
+
+terminal READ, WRITE, WRITELN, WRITET, WRITEB, OUTPAR,  DIV, DIVINT;
+terminal RETURN;
+
+terminal String ID;
+
+non terminal ProgramNode Program;
+non terminal ArrayList<VarDeclNode> VarDeclList;
+non terminal VarDeclNode VarDecl;
+non terminal ArrayList<FunNode> FunList;
+non terminal FunNode Fun;
+non terminal MainNode Main;
+non terminal StatNode Stat;
+non terminal ArrayList<StatNode> StatList;
+
+non terminal ArrayList<InitNode> IdListInit;
+non terminal ArrayList<InitNode> IdListInitObbl;
+
+non terminal String Type;
+non terminal String Const;
+
+non terminal ArrayList<ParamDeclNode> ParamDeclList;
+non terminal ArrayList<ParamDeclNode> NonEmptyParamDeclList;
+
+non terminal ParamDeclNode ParDecl;
+
+non terminal IfStatNode IfStat;
+non terminal WhileStatNode WhileStat;
+non terminal ReadStatNode ReadStat;
+non terminal WriteStatNode WriteStat;
+non terminal AssignStatNode AssignStat;
+
+non terminal ExprNode Expr;
+non terminal ArrayList<ExprNode> ExprList;
+non terminal ElseNode Else;
+non terminal CallFunNode CallFun;
+non terminal ArrayList<LeafNode> IdList;
+
+precedence left LPAR,RPAR;
+precedence right POW;
+precedence left TIMES,DIV,DIVINT;
+precedence left PLUS, MINUS;
+precedence left STR_CONCAT;
+precedence left EQ, NE, LT, LE, GT, GE;
+precedence right NOT;
+precedence left AND,OR;
+
+
+/*grammar*/
+Program ::= VarDeclList:varDeclListNode FunList:funListNode Main:mainNode{: RESULT = new ProgramNode(varDeclListNode,funListNode,mainNode); :};
+
+VarDeclList ::= /* empty */ {:RESULT = new ArrayList<VarDeclNode>();:}
+| VarDecl:varDeclNode VarDeclList:varDeclListNode {:RESULT = varDeclListNode; varDeclListNode.add(varDeclNode);:};
+
+Main ::= MAIN VarDeclList:varDeclListNode StatList:statListNode END MAIN SEMI {:RESULT = new MainNode(varDeclListNode, statListNode);:};
+
+FunList ::= /* empty */  {: RESULT = new ArrayList<FunNode>(); :}
+	| Fun:funNode FunList:funListNode {: RESULT = funListNode; funListNode.add(funNode); :};
+
+VarDecl ::= Type:typeNode IdListInit:idListInitNode SEMI {: RESULT = new  VarDeclNode("VARDECL", typeNode, idListInitNode);:}
+	| VAR IdListInitObbl:idListInitObblNode SEMI {: RESULT = new  VarDeclNode("VARDECL", null, idListInitObblNode); :};
+
+Type ::= INTEGER  {: RESULT =  "INTEGER"; :}
+ | BOOL  {: RESULT =  "BOOL"; :}
+ | REAL  {: RESULT =  "REAL"; :}
+ | STRING {: RESULT =  "STRING"; :};
+
+IdListInit ::= ID:id {: RESULT = new ArrayList<InitNode>() {{ add(new InitNode(new LeafNode("ID", id), null,null)); }}; :}
+	| IdListInit:idListInitNode COMMA ID:id {:  RESULT = idListInitNode; idListInitNode.add(new InitNode(new LeafNode("ID", id), null,null)); :}
+	| ID:id ASSIGN Expr:exprNode  {: RESULT = new ArrayList<InitNode>() {{add(new InitNode(new LeafNode("ID", id), exprNode,null));}}; :}
+	| IdListInit:idListInitNode  COMMA ID:id ASSIGN Expr:exprNode  {: idListInitNode.add(new InitNode(new LeafNode("ID", id),  exprNode,null)); RESULT = idListInitNode; :};
+
+IdListInitObbl ::= ID:id ASSIGN Const:constNode  {: RESULT = new ArrayList<InitNode>() {{add(new InitNode(new LeafNode("ID", id), null, constNode));}}; :}
+	| IdListInitObbl:idListInitObblNode COMMA ID:id ASSIGN Const:constNode {: idListInitObblNode.add(new InitNode(new LeafNode("ID", id), null, constNode)); RESULT = idListInitObblNode; :};
+
+Const ::= INTEGER_CONST {: RESULT =  "INTEGER_CONST"; :}
+        | REAL_CONST{: RESULT = "REAL_CONST"; :}
+        | TRUE {: RESULT = "TRUE"; :}
+       	| FALSE  {: RESULT = "FALSE"; :}
+        | STRING_CONST{: RESULT =  "STRING_CONST"; :};
+
+Fun ::= FUN ID:id LPAR ParamDeclList:paramDeclListNode RPAR COLON Type:typeNode VarDeclList:varDeclListNode StatList:statListNode END FUN SEMI {: RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, typeNode, varDeclListNode, statListNode); :}
+	| FUN ID:id LPAR ParamDeclList:paramDeclListNode RPAR VarDeclList:varDeclListNode StatList:statListNode END FUN SEMI {: RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, null, varDeclListNode, statListNode); :};
+
+ParamDeclList ::= /* empty */ {: RESULT = null; :}
+	| NonEmptyParamDeclList:nonEmptyParamDeclListNod {: RESULT = nonEmptyParamDeclListNod; :};
+
+NonEmptyParamDeclList ::= ParDecl:parDeclNode {: RESULT = new ArrayList<ParamDeclNode>() {{ add(parDeclNode);}};  :}
+	| NonEmptyParamDeclList:nonEmptyParamDeclListNode COMMA ParDecl:parDeclNode {: nonEmptyParamDeclListNode.add(parDeclNode); RESULT = nonEmptyParamDeclListNode; :};
+
+ParDecl ::= Type:typeRef ID:id {: RESULT = new ParamDeclNode("IN",typeRef, new LeafNode("ID", id)); :}
+	| OUT Type:typeRef ID:id {: RESULT = new ParamDeclNode("OUT", typeRef, new LeafNode("ID", id)); :};
+
+StatList ::= /* empty */  {: RESULT = new ArrayList<StatNode>(); :}
+     | Stat:statNode StatList:statListNode  {: RESULT=statListNode; statListNode.add(statNode);  :};
+
+Stat ::= IfStat:ifStatNode SEMI {:  RESULT = ifStatNode; :}
+    | WhileStat:whileStatNode SEMI  {:  RESULT = whileStatNode; :}
+    | ReadStat:readStatNode SEMI  {:  RESULT = readStatNode; :}
+    | WriteStat:writeStatNode SEMI  {:  RESULT = writeStatNode; :}
+    | AssignStat:assignStatNode SEMI {:  RESULT = assignStatNode; :}
+    | CallFun:callFunNode SEMI  {: RESULT = callFunNode; :}
+    | RETURN Expr:exprNode SEMI {:RESULT = new ReturnNode("RETURN", exprNode);:} ;
+
+IfStat ::= IF Expr:exprNode THEN VarDeclList:varDeclListNode StatList:statListNode Else:elseNode END IF {: RESULT = new IfStatNode("IF", exprNode, varDeclListNode, statListNode,elseNode); :};
+
+Else ::= /* empty */ {: RESULT = null; :}
+	| ELSE VarDeclList:varDeclListNode StatList:statListNode{: RESULT = new ElseNode("ELSE", varDeclListNode, statListNode); :};
+
+WhileStat ::= WHILE Expr:exprNode LOOP VarDeclList:varDeclListNode  StatList:statListNode END LOOP {: RESULT = new WhileStatNode("WHILE", exprNode, varDeclListNode, statListNode); :};
+
+ReadStat ::= READ IdList:idListNode Expr:exprNode {: RESULT = new ReadStatNode("READ", idListNode, exprNode); :}
+	| READ IdList:idListNode {: RESULT = new ReadStatNode("READ", idListNode, null); :};
+
+IdList ::= ID:id {: RESULT = new ArrayList<LeafNode>() {{ add(new LeafNode("ID", id));}}; :}
+	| IdList:idListNode COMMA ID:id {: RESULT = idListNode; idListNode.add(new LeafNode("ID", id));  :};
+
+WriteStat ::=  WRITE  Expr:exprNode {: RESULT = new WriteStatNode("WRITE", exprNode);  :}
+	| WRITELN  Expr:exprNode  {: RESULT = new WriteStatNode("WRITELN", exprNode); :}
+	| WRITET  Expr:exprNode {: RESULT = new WriteStatNode("WRITET", exprNode); :}
+	| WRITEB  Expr:exprNode  {: RESULT = new WriteStatNode("WRITEB", exprNode); :};
+
+AssignStat ::=  ID:id ASSIGN Expr:exprNode {: RESULT = new AssignStatNode("ASSIGN", new LeafNode("ID", id), exprNode);  :};
+
+CallFun ::= ID:id LPAR ExprList:exprListNode RPAR {:   RESULT = new CallFunNode("CALL FUN", new LeafNode("ID", id), exprListNode);   :}
+	| ID:id LPAR RPAR {: RESULT = new CallFunNode("CALL FUN", new LeafNode("ID", id), new ArrayList<ExprNode>()); :};
+
+ExprList ::= Expr:exprNode {: RESULT = new ArrayList<ExprNode>() {{ add(exprNode); }}; :}
+	| Expr:exprNode COMMA ExprList:exprListNode {:  RESULT = exprListNode; exprListNode.add(exprNode); :}
+	| OUTPAR ID:id {:      RESULT = new ArrayList<ExprNode>() {{ add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); }};  :}
+	| OUTPAR ID:id COMMA ExprList:exprListNode {: RESULT =exprListNode; exprListNode.add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); :};
+
+Expr ::= TRUE {: RESULT = new LeafNode("BOOL", "TRUE"); :}
+	| FALSE  {: RESULT = new LeafNode("BOOL", "FALSE"); :}
+	| INTEGER_CONST:iConst {: RESULT = new LeafNode("INTEGER_CONST", "INTEGER_CONST"); :}
+	| REAL_CONST:rConst {: RESULT = new LeafNode("REAL_CONST", "REAL_CONST"); :}
+	| STRING_CONST:sConst {: RESULT = new LeafNode("STRING_CONST", "STRING_CONST"); :}
+	| ID:id {: RESULT = new LeafNode("ID", id); :}
+	| CallFun:callFunNode {: RESULT = callFunNode; :}
+	| Expr:exprNode1  PLUS Expr:exprNode2  {: RESULT = new BinOpNode("PLUS", exprNode1, exprNode2); :}
+	| Expr:exprNode1  MINUS Expr:exprNode2  {: RESULT = new BinOpNode("MINUS", exprNode1, exprNode2); :}
+	| Expr:exprNode1  TIMES Expr:exprNode2  {: RESULT = new BinOpNode("TIMES", exprNode1, exprNode2); :}
+	| Expr:exprNode1  DIV  Expr:exprNode2 {: RESULT = new BinOpNode("DIV", exprNode1, exprNode2); :}
+	| Expr:exprNode1  DIVINT  Expr:exprNode2 {: RESULT = new BinOpNode("DIVINT", exprNode1, exprNode2); :}
+	| Expr:exprNode1  AND  Expr:exprNode2 {: RESULT = new BinOpNode("AND", exprNode1, exprNode2); :}
+	| Expr:exprNode1  POW  Expr:exprNode2  {: RESULT = new BinOpNode("POW", exprNode1, exprNode2); :}
+	| Expr:exprNode1  STR_CONCAT  Expr:exprNode2 {: RESULT = new BinOpNode("STR_CONCAT", exprNode1, exprNode2); :}
+	| Expr:exprNode1  OR  Expr:exprNode2 {: RESULT = new BinOpNode("OR", exprNode1, exprNode2); :}
+	| Expr:exprNode1  GT  Expr:exprNode2 {: RESULT = new BinOpNode("GT", exprNode1, exprNode2); :}
+	| Expr:exprNode1  GE  Expr:exprNode2 {: RESULT = new BinOpNode("GE", exprNode1, exprNode2); :}
+	| Expr:exprNode1  LT  Expr:exprNode2 {: RESULT = new BinOpNode("LT", exprNode1, exprNode2); :}
+	| Expr:exprNode1  LE  Expr:exprNode2 {: RESULT = new BinOpNode("LE", exprNode1, exprNode2); :}
+	| Expr:exprNode1  EQ  Expr:exprNode2 {: RESULT = new BinOpNode("EQ", exprNode1, exprNode2); :}
+	| Expr:exprNode1  NE  Expr:exprNode2 {: RESULT = new BinOpNode("NE", exprNode1, exprNode2); :}
+    | MINUS Expr:exprNode1  {: RESULT = new UnOpNode("MINUS", exprNode1); :}
+	| NOT Expr:exprNode1  {: RESULT = new UnOpNode("NOT", exprNode1); :}
+	| LPAR Expr:exprNode1 RPAR {: RESULT = exprNode1; :};
+
+
