@@ -1,4 +1,4 @@
-package visitor;
+package visitor.xml;
 
 import java.util.List;
 

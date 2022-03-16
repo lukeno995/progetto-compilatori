@@ -1,7 +1,8 @@
-package visitor;
+package visitor.xml;
 
-import com.sun.tools.javac.Main;
 import nodes.*;
+import visitor.xml.AbstractSyntaxNode;
+import visitor.xml.Visitor;
 
 import java.util.ArrayList;
 

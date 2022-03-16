@@ -1,6 +1,6 @@
 package nodes;
 
-import visitor.AbstractSyntaxNode;
+import visitor.xml.AbstractSyntaxNode;
 
 public class InitNode extends AbstractSyntaxNode {
     private LeafNode leafNode;

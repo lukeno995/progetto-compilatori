@@ -1,6 +1,6 @@
 package nodes;
 
-import visitor.AbstractSyntaxNode;
+import visitor.xml.AbstractSyntaxNode;
 
 import java.util.ArrayList;
 import java.util.Collections;

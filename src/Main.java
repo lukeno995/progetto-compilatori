@@ -1,5 +1,5 @@
 import nodes.*;
-import visitor.XMLVisitor;
+import visitor.xml.XMLVisitor;
 
 import java.io.File;
 import java.io.FileReader;

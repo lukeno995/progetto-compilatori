@@ -1,6 +1,6 @@
 package nodes;
 
-import visitor.AbstractSyntaxNode;
+import visitor.xml.AbstractSyntaxNode;
 
 public class ParamDeclNode extends AbstractSyntaxNode {
     private String mode;
