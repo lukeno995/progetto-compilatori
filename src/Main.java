@@ -1,4 +1,5 @@
 import nodes.*;
+import visitor.clang.CGeneratorVisitor;
 import visitor.xml.XMLVisitor;
 
 import java.io.File;
@@ -16,9 +17,17 @@ public class Main {
         parser p = new parser(new Lexer(new FileReader(new File(inPathFile))));
 
         ProgramNode programOp = (ProgramNode) p.debug_parse().value;
+//
+//        XMLVisitor xmlVisitor = new XMLVisitor();
+//        System.out.println(programOp.accept(xmlVisitor));
 
-        XMLVisitor xmlVisitor = new XMLVisitor();
-        System.out.println(programOp.accept(xmlVisitor));
 
+        //semantica vistor scope
+
+
+        //visitor typecheck-regole d'inferenza
+        //visitor codegen
+        CGeneratorVisitor codeGenVisitor = new CGeneratorVisitor(inPathFile);
+        programOp.accept(codeGenVisitor);
     }
 }

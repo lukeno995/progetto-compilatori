@@ -6,7 +6,7 @@ import exception.TypeMismatchException;
 public class TypeChecker {
     //VALORI DI CONTROLLI PER IL CHECKER
     private static final String INT = "INTEGER";
-    private static final String BOOL = "bool";
+    private static final String BOOL = "BOOL";
     private static final String STRING = "STRING";
     private static final String REAL = "REAL";
     private static final String VOID = "VOID";
