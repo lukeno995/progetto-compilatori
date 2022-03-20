@@ -1,5 +1,8 @@
 package nodes;
 
+import util.RecordTable;
+import util.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,6 +11,7 @@ public class IfStatNode extends StatNode{
     private ArrayList<VarDeclNode>  varDeclListNode;
     private ArrayList<StatNode> statListNode;
     private ElseNode elseNode;
+    private SymbolTable<String, RecordTable> symbolTable;
 
 
     public IfStatNode(String name, ExprNode exprNode, ArrayList<VarDeclNode> varDeclListNode, ArrayList<StatNode> statListNode, ElseNode elseNode) {
@@ -50,5 +54,12 @@ public class IfStatNode extends StatNode{
 
     public void setElseNode(ElseNode elseNode) {
         this.elseNode = elseNode;
+    }
+    public SymbolTable<String, RecordTable> getSymbolTable() {
+        return symbolTable;
+    }
+
+    public void setSymbolTable(SymbolTable<String, RecordTable> symbolTable) {
+        this.symbolTable = symbolTable;
     }
 }

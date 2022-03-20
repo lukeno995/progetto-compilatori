@@ -1,6 +1,6 @@
 package util;
 
-import nodes.LeafNode;
+import nodes.*;
 import visitor.xml.AbstractSyntaxNode;
 
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ public class SymbolTable <String, RecordTable> extends HashMap<String, RecordTab
             parent.addChild(this);
         }
     }
+
 
     public void setParent(SymbolTable<String, RecordTable> parent) {
         this.parent = parent;
@@ -51,7 +52,38 @@ public class SymbolTable <String, RecordTable> extends HashMap<String, RecordTab
     public AbstractSyntaxNode getScopingNode() {
         return scopingNode;
     }
+
     public void setScopingNode(AbstractSyntaxNode scopingNode) {
         this.scopingNode = scopingNode;
+    }
+
+
+    @Override
+    public java.lang.String toString() {
+        java.lang.String string = "";
+        string += "\nGlobal : \n";
+        for (RecordTable tmp : this.values())
+            string += tmp + "\n";
+        int number = 0;
+        for (SymbolTable tmp : this.getChildren()) {
+            if(tmp.getScopingNode() instanceof FunNode){
+                string += "\n" + ((FunNode) tmp.getScopingNode()).getLeafNode().getNameId() + " : \n";
+            }
+            if(tmp.getScopingNode() instanceof WhileStatNode){
+                string += "\nWhileOpNode_" + number +  " : \n";
+                number++;
+            }
+            if(tmp.getScopingNode() instanceof IfStatNode){
+                string += "\nIfStatNode_" + number +  " : \n";
+                number++;
+            }
+            if(tmp.getScopingNode() instanceof ElseNode){
+                string += "\nElseNode_" + number +  " : \n";
+                number++;
+            }
+            for (Object tmp1 : tmp.values())
+                string += tmp1 + "\n";
+        }
+        return string;
     }
 }

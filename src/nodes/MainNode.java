@@ -1,5 +1,7 @@
 package nodes;
 
+import util.RecordTable;
+import util.SymbolTable;
 import visitor.xml.AbstractSyntaxNode;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.Collections;
 public class MainNode extends AbstractSyntaxNode {
     private ArrayList<VarDeclNode> varDeclListNode;
     private ArrayList<StatNode> statListNode;
+    private SymbolTable<String, RecordTable> symbolTable;
 
     public MainNode(ArrayList<VarDeclNode> varDeclListNode, ArrayList<StatNode> statListNode) {
         this.varDeclListNode = varDeclListNode;
@@ -30,5 +33,13 @@ public class MainNode extends AbstractSyntaxNode {
 
     public void setStatListNode(ArrayList<StatNode> statListNode) {
         this.statListNode = statListNode;
+    }
+
+    public SymbolTable<String, RecordTable> getSymbolTable() {
+        return symbolTable;
+    }
+
+    public void setSymbolTable(SymbolTable<String, RecordTable> symbolTable) {
+        this.symbolTable = symbolTable;
     }
 }

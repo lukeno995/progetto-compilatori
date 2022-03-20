@@ -3,6 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RecordTable {
     private String symbol;
     private String kind;   // var, fun
@@ -69,5 +70,37 @@ public class RecordTable {
 
     public void setReturnType(Integer returnType) {
         this.returnType = returnType;
+    }
+
+    @Override
+    public String toString() {
+        if (kind != null) {
+            if (kind.equals("var")) {
+                return "SymbolTableRecord{" +
+                        "symbol='" + symbol + '\'' +
+                        ", kind='" + kind + '\'' +
+                        ", varType=" + varType +
+                        '}';
+            } else if (kind.equals("fun")) {
+                String tmpParams = "";
+                String tmpReturn = "";
+                if (paramsType != null) {
+                    for (Integer tmp : paramsType) {
+                        tmpParams += tmp + " ";
+                    }
+                }
+                if (returnType != null) {
+                    tmpReturn += returnType + " ";
+                }
+
+                return "SymbolTableRecord{" +
+                        "symbol='" + symbol + '\'' +
+                        ", kind='" + kind + '\'' +
+                        ", paramsType=" + tmpParams +
+                        ", returnType=" + tmpReturn +
+                        '}';
+            }
+        }
+        return null;
     }
 }

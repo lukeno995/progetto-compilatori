@@ -1,5 +1,8 @@
 package nodes;
 
+import util.RecordTable;
+import util.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +10,7 @@ public class WhileStatNode extends StatNode {
     private ExprNode exprNode;
     private ArrayList<VarDeclNode> varDeclListNode;
     private ArrayList<StatNode> statListNode;
+    private SymbolTable<String, RecordTable> symbolTable;
 
     public WhileStatNode(String name, ExprNode exprNode, ArrayList<VarDeclNode> varDeclListNode, ArrayList<StatNode> statListNode) {
         super(name);
@@ -39,5 +43,13 @@ public class WhileStatNode extends StatNode {
 
     public void setStatListNode(ArrayList<StatNode> statListNode) {
         this.statListNode = statListNode;
+    }
+
+    public SymbolTable<String, RecordTable> getSymbolTable() {
+        return symbolTable;
+    }
+
+    public void setSymbolTable(SymbolTable<String, RecordTable> symbolTable) {
+        this.symbolTable = symbolTable;
     }
 }
