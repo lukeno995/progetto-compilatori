@@ -9,8 +9,8 @@ import java_cup.runtime.*;
 %cup // Declare that we expect to use Java CUP
 
 %eofval{
-	return new Symbol(sym.EOF,new String("END OF FILE"));
-%eofval}
+	return new symbol(Sym.EOF,new String("END OF FILE"));
+    %eofval}
 %eofclose
 // Abbreviations for regular expressions
 LineTerminator = \r|\n|\r\n
@@ -26,16 +26,15 @@ Comment = {TraditionalComment} | {EndOfLineComment}
 TraditionalComment = "#*" [^*] ~"#"
 EndOfLineComment = "//" {InputCharacter}* {LineTerminator}? | "#" {InputCharacter}* {LineTerminator}?
 integer = 0 | {digitWithNoZero}{digit}*
-number = ((\+|-)?({digit}+)(\.{digit}+)?)|((\+|-)?\.?{digit}+)
-
+number = ((\+|-)?({digit}+)(\.{digit}+)?)
 
 %{
     StringBuilder string = new StringBuilder();
-    private Symbol symbol(int type){
-        return new Symbol(type, yyline, yycolumn);
+    private symbol symbol(int type){
+        return new symbol(type, yyline, yycolumn);
     }
-    private Symbol symbol(int type, Object value){
-        return new Symbol(type, yyline, yycolumn, value);
+    private symbol symbol(int type, Object value){
+        return new symbol(type, yyline, yycolumn, value);
     }
 %}
 
@@ -45,64 +44,64 @@ number = ((\+|-)?({digit}+)(\.{digit}+)?)|((\+|-)?\.?{digit}+)
 %%
 
 <YYINITIAL> {
-<<EOF>>             { return symbol(sym.EOF); }
-"main"				{return symbol(sym.MAIN);}
-"integer"			{return symbol(sym.INTEGER);}
-"string"			{return symbol(sym.STRING);}
-"real"				{return symbol(sym.REAL);}
-"bool"				{return symbol(sym.BOOL);}
-"("					{return symbol(sym.LPAR);}
-")"					{return symbol(sym.RPAR);}
-":"					{return symbol(sym.COLON);}
-"fun"				{return symbol(sym.FUN);}
-"end"				{return symbol(sym.END);}
-"if"				{return symbol(sym.IF);}
-"then"				{return symbol(sym.THEN);}
-"else"				{return symbol(sym.ELSE);}
-"while"				{return symbol(sym.WHILE);}
-"loop"				{return symbol(sym.LOOP);}
-"%"					{return symbol(sym.READ);}
-"?"					{return symbol(sym.WRITE);}
-"?."				{return symbol(sym.WRITELN);}
-"?,"				{return symbol(sym.WRITEB);}
-"?:"				{return symbol(sym.WRITET);}
-":="				{return symbol(sym.ASSIGN);}
-"+"					{return symbol(sym.PLUS);}
-"-"					{return symbol(sym.MINUS);}
-"*"					{return symbol(sym.TIMES);}
-"div"				{return symbol(sym.DIVINT);}
-"/"					{return symbol(sym.DIV);}
-"^"					{return symbol(sym.POW);}
-"&"					{return symbol(sym.STR_CONCAT);}
-"=" 				{return symbol(sym.EQ);}
-"<>"                {return symbol(sym.NE);}
-"!="                {return symbol(sym.NE);}
-"<" 				{return symbol(sym.LT);}
-"<=" 				{return symbol(sym.LE);}
-">" 				{return symbol(sym.GT);}
-">="				{return symbol(sym.GE);}
-"and"				{return symbol(sym.AND);}
-"or"				{return symbol(sym.OR);}
-"not"				{return symbol(sym.NOT);}
-//"null"      		{return symbol(sym.NULL);}
-"true"      		{return symbol(sym.TRUE);}
-"false"         	{return symbol(sym.FALSE);}
-{integer} 	        {return symbol(sym.INTEGER_CONST);}
-{number}		    {return symbol(sym.REAL_CONST);}
+<<EOF>>             { return symbol(Sym.EOF); }
+"main"				{return symbol(Sym.MAIN);}
+"integer"			{return symbol(Sym.INTEGER);}
+"string"			{return symbol(Sym.STRING);}
+"real"				{return symbol(Sym.REAL);}
+"bool"				{return symbol(Sym.BOOL);}
+"("					{return symbol(Sym.LPAR);}
+")"					{return symbol(Sym.RPAR);}
+":"					{return symbol(Sym.COLON);}
+"fun"				{return symbol(Sym.FUN);}
+"end"				{return symbol(Sym.END);}
+"if"				{return symbol(Sym.IF);}
+"then"				{return symbol(Sym.THEN);}
+"else"				{return symbol(Sym.ELSE);}
+"while"				{return symbol(Sym.WHILE);}
+"loop"				{return symbol(Sym.LOOP);}
+"%"					{return symbol(Sym.READ);}
+"?"					{return symbol(Sym.WRITE);}
+"?."				{return symbol(Sym.WRITELN);}
+"?,"				{return symbol(Sym.WRITEB);}
+"?:"				{return symbol(Sym.WRITET);}
+":="				{return symbol(Sym.ASSIGN);}
+"+"					{return symbol(Sym.PLUS);}
+"-"					{return symbol(Sym.MINUS);}
+"*"					{return symbol(Sym.TIMES);}
+"div"				{return symbol(Sym.DIVINT);}
+"/"					{return symbol(Sym.DIV);}
+"^"					{return symbol(Sym.POW);}
+"&"					{return symbol(Sym.STR_CONCAT);}
+"=" 				{return symbol(Sym.EQ);}
+"<>"                {return symbol(Sym.NE);}
+"!="                {return symbol(Sym.NE);}
+"<" 				{return symbol(Sym.LT);}
+"<=" 				{return symbol(Sym.LE);}
+">" 				{return symbol(Sym.GT);}
+">="				{return symbol(Sym.GE);}
+"and"				{return symbol(Sym.AND);}
+"or"				{return symbol(Sym.OR);}
+"not"				{return symbol(Sym.NOT);}
+//"null"      		{return symbol(symbol.Sym.NULL);}
+"true"      		{return symbol(Sym.TRUE);}
+"false"         	{return symbol(Sym.FALSE);}
+{integer} 	        {return symbol(Sym.INTEGER_CONST, yytext());}
+{number}		    {return symbol(Sym.REAL_CONST, yytext());}
 \"                  {string.setLength(0); yybegin(STRING);}
 \'                  {string.setLength(0); yybegin(STRING);}
-";"					{return symbol(sym.SEMI);}
-","					{return symbol(sym.COMMA);}
-"return"			{return symbol(sym.RETURN);}
-"@"					{return symbol(sym.OUTPAR);}
-"var"				{return symbol(sym.VAR);}
-"out"				{return symbol(sym.OUT);}
-"loop"				{return symbol(sym.LOOP);}
-{id}				{return symbol(sym.ID,yytext());}
+";"					{return symbol(Sym.SEMI);}
+","					{return symbol(Sym.COMMA);}
+"return"			{return symbol(Sym.RETURN);}
+"@"					{return symbol(Sym.OUTPAR);}
+"var"				{return symbol(Sym.VAR);}
+"out"				{return symbol(Sym.OUT);}
+"loop"				{return symbol(Sym.LOOP);}
+{id}				{return symbol(Sym.ID,yytext());}
 }
 
 <STRING> {
-\'  {yybegin(YYINITIAL); return new Symbol(sym.STRING_CONST, string.toString()); }
+\'  {yybegin(YYINITIAL); return new Symbol(Sym.STRING_CONST, string.toString()); }
 
 [^\t\n\r'\\]+    { string.append(yytext()); }
 
@@ -122,7 +121,7 @@ number = ((\+|-)?({digit}+)(\.{digit}+)?)|((\+|-)?\.?{digit}+)
 
 \t { string.append("\t"); }
 
-<<EOF>> {return new Symbol(sym.error, "STRINGA COSTANTE NON COMPLETATA: "+ string.toString()); }
+<<EOF>> {return new Symbol(Sym.error, "STRINGA COSTANTE NON COMPLETATA: "+ string.toString()); }
          }
 
 {WhiteSpace} { /* ignore */ }

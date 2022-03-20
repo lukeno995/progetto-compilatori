@@ -2,7 +2,6 @@ package nodes;
 
 public class LeafNode extends ExprNode {
     private String nameId;
-
     public LeafNode(String name, String nameId) {
         super(name);
         this.nameId = nameId;

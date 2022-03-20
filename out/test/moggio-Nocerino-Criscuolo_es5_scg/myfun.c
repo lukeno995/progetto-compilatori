@@ -2,94 +2,93 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
 float somma(float a, float b) {
 float result;
-printf("STRING_CONST\n"); 
+printf(""Somma: "\n"); 
 result = a + b;
 return result;
-
 }
 float moltiplica(float a, float b) {
 float result;
-printf("STRING_CONST\n"); 
-if (a == REAL_CONST || b == REAL_CONST) {
-result = REAL_CONST;
+printf(""Moltiplicazione: "\n"); 
+if (a == 0.0 || b == 0.0) {
+result = 0.0;
 }
 else {
 result = a * b;
 
 }
 return result;
-
 }
 float dividi(float a, float b) {
 float result;
-printf("STRING_CONST\n"); 
-if (b == REAL_CONST) {
-result = REAL_CONST;
+printf(""Divisione: "\n"); 
+if (b == 0.0) {
+result = 0.0;
 }
 else {
 result = a / b;
 
 }
 return result;
-
 }
 float sottrai(float a, float b) {
 float result;
-printf("STRING_CONST\n"); 
+printf(""Sottrazione: "\n"); 
 if (a < b) {
-result = REAL_CONST;
+result = 0.0;
 }
 else {
 result = a - b;
 
 }
 return result;
-
 }
 void stampa(char* messaggio) {
 i;
-while (i <= INTEGER_CONST) {
+while (i <= 4) {
 incremento;
-printf("STRING_CONST\n"); 
+printf("""\n"); 
 i = i + incremento;
     }
 printf("messaggio\n"); 
-
-}int main() {
-float a = REAL_CONST;
-float b = REAL_CONST;
+}
+int main() {
+float a = 0.0;
+float b = 0.0;
 op;
 ans;
-int operator = INTEGER_CONST;
-while (ans == STRING_CONST) {
-ans = STRING_CONST;
+int operator = 0;
+while (ans == "si") {
+ans = "";
 printf("op\n"); 
-printf("STRING_CONST\n"); 
+
+scanf(");
+printf(""Operatore selezionato:"\n"); 
 printf("operator\n"); 
-if (operator == INTEGER_CONST) {
-result = (a, b);
-;
+
+scanf(");
+
+scanf(");
+if (operator == 1) {
+result = somma(a, b);
 }
-if (operator == INTEGER_CONST) {
-result = (a, b);
-;
+if (operator == 2) {
+result = moltiplica(a, b);
 }
-if (operator == INTEGER_CONST) {
-result = (a, b);
-;
+if (operator == 3) {
+result = dividi(a, b);
 }
-if (operator == INTEGER_CONST) {
-result = (a, b);
-;
+if (operator == 4) {
+result = sottrai(a, b);
 }
-(STRING_CONSTresult);
-printf("STRING_CONST\n"); 
+stampa("Il risultato della tua operazione è "result);
+printf(""vuoi continuare? (si/no)"\n"); 
+
+scanf(");
     }
-printf("STRING_CONST\n"); 
-printf("STRING_CONST\n"); 
+printf("""\n"); 
+printf(""ciao"\n"); 
 
     return 0;
 }

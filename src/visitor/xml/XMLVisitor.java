@@ -250,6 +250,15 @@ public class XMLVisitor implements Visitor {
                 }
 
             }
+            if (node instanceof ConstNode) {
+                xmlString += "<ConstNode> ";
+
+                xmlString += "("+ ((ConstNode) node).getNameID() +",";
+                if (((ConstNode) node).getValue()!= null) {
+                    xmlString +=    ((ConstNode) node).getValue().toString() +")";
+                }
+                xmlString += "</ConstNode> ";
+            }
 
             if (node instanceof BinOpNode) {
                 xmlString += "<BinOpNode> ";

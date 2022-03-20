@@ -28,7 +28,8 @@ non terminal ArrayList<InitNode> IdListInit;
 non terminal ArrayList<InitNode> IdListInitObbl;
 
 non terminal String Type;
-non terminal String Const;
+
+non terminal ConstNode Const;
 
 non terminal ArrayList<ParamDeclNode> ParamDeclList;
 non terminal ArrayList<ParamDeclNode> NonEmptyParamDeclList;
@@ -84,11 +85,11 @@ IdListInit ::= ID:id {: RESULT = new ArrayList<InitNode>() {{ add(new InitNode(n
 IdListInitObbl ::= ID:id ASSIGN Const:constNode  {: RESULT = new ArrayList<InitNode>() {{add(new InitNode(new LeafNode("ID", id), null, constNode));}}; :}
 	| IdListInitObbl:idListInitObblNode COMMA ID:id ASSIGN Const:constNode {: idListInitObblNode.add(new InitNode(new LeafNode("ID", id), null, constNode)); RESULT = idListInitObblNode; :};
 
-Const ::= INTEGER_CONST {: RESULT =  "INTEGER_CONST"; :}
-        | REAL_CONST{: RESULT = "REAL_CONST"; :}
-        | TRUE {: RESULT = "TRUE"; :}
-       	| FALSE  {: RESULT = "FALSE"; :}
-        | STRING_CONST{: RESULT =  "STRING_CONST"; :};
+Const ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER_CONST", iconst); :}
+        | REAL_CONST:iconst{: RESULT = new ConstNode("REAL_CONST", iconst); :}
+        | TRUE:iconst {: RESULT = new ConstNode("TRUE", iconst); :}
+       	| FALSE:iconst  {: RESULT = new ConstNode("FALSE",iconst); :}
+        | STRING_CONST:iconst {: RESULT = new  ConstNode("STRING_CONST", iconst); :};
 
 Fun ::= FUN ID:id LPAR ParamDeclList:paramDeclListNode RPAR COLON Type:typeNode VarDeclList:varDeclListNode StatList:statListNode END FUN SEMI {: RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, typeNode, varDeclListNode, statListNode); :}
 	| FUN ID:id LPAR ParamDeclList:paramDeclListNode RPAR VarDeclList:varDeclListNode StatList:statListNode END FUN SEMI {: RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, null, varDeclListNode, statListNode); :};
@@ -141,11 +142,11 @@ ExprList ::= Expr:exprNode {: RESULT = new ArrayList<ExprNode>() {{ add(exprNode
 	| OUTPAR ID:id {:      RESULT = new ArrayList<ExprNode>() {{ add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); }};  :}
 	| OUTPAR ID:id COMMA ExprList:exprListNode {: RESULT =exprListNode; exprListNode.add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); :};
 
-Expr ::= TRUE {: RESULT = new LeafNode("BOOL", "TRUE"); :}
-	| FALSE  {: RESULT = new LeafNode("BOOL", "FALSE"); :}
-	| INTEGER_CONST:iConst {: RESULT = new LeafNode("INTEGER_CONST", "INTEGER_CONST"); :}
-	| REAL_CONST:rConst {: RESULT = new LeafNode("REAL_CONST", "REAL_CONST"); :}
-	| STRING_CONST:sConst {: RESULT = new LeafNode("STRING_CONST", "STRING_CONST"); :}
+Expr ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER_CONST", iconst); :}
+    | REAL_CONST:iconst{: RESULT = new  ConstNode("REAL_CONST", iconst); :}
+    | TRUE:iconst {: RESULT = new  ConstNode("TRUE", iconst); :}
+    | FALSE:iconst  {: RESULT = new  ConstNode("FALSE", iconst); :}
+    | STRING_CONST:iconst {: RESULT = new  ConstNode("STRING_CONST", iconst); :}
 	| ID:id {: RESULT = new LeafNode("ID", id); :}
 	| CallFun:callFunNode {: RESULT = callFunNode; :}
 	| Expr:exprNode1  PLUS Expr:exprNode2  {: RESULT = new BinOpNode("PLUS", exprNode1, exprNode2); :}
