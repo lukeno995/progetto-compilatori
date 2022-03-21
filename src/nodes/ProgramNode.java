@@ -1,6 +1,5 @@
 package nodes;
 
-import util.RecordTable;
 import util.SymbolTable;
 import visitor.xml.AbstractSyntaxNode;
 
@@ -11,7 +10,7 @@ public class ProgramNode extends AbstractSyntaxNode {
     private ArrayList<VarDeclNode>  varDeclListNode;
     private ArrayList<FunNode> funListNode;
     private MainNode mainNode;
-    private SymbolTable<String, RecordTable> symbolTable;
+    private SymbolTable symbolTable;
 
     public ProgramNode(ArrayList<VarDeclNode> varDeclListNode, ArrayList<FunNode> funListNode, MainNode mainNode) {
         this.varDeclListNode = varDeclListNode;
@@ -45,11 +44,11 @@ public class ProgramNode extends AbstractSyntaxNode {
         this.mainNode = mainNode;
     }
 
-    public SymbolTable<String, RecordTable> getSymbolTable() {
+    public SymbolTable getSymbolTable() {
         return symbolTable;
     }
 
-    public void setSymbolTable(SymbolTable<String, RecordTable> symbolTable) {
+    public void setSymbolTable(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
     }
 }

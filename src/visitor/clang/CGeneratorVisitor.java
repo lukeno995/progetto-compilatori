@@ -5,11 +5,12 @@ import visitor.xml.AbstractSyntaxNode;
 import visitor.xml.Visitor;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class CGeneratorVisitor implements Visitor {
 
-    private Writer writer;
+    private final Writer writer;
     private String code = "";
 
     public CGeneratorVisitor(String fileName) throws IOException {
@@ -17,7 +18,7 @@ public class CGeneratorVisitor implements Visitor {
         fileName += ".c";
         fileName = "" + fileName;
 
-        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "utf-8"));
+        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8));
     }
 
     public void close() throws IOException {
@@ -88,7 +89,7 @@ public class CGeneratorVisitor implements Visitor {
         code += "#include <string.h>\n";
         code += "#include <math.h>\n";
 
-        ArrayList<VarDeclNode> varDeclListNode = ((ProgramNode) node).getVarDeclListNode();
+        ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
         for (VarDeclNode varDeclNode : varDeclListNode) {
             if (varDeclNode != null) {
                 (varDeclNode).accept(this);
@@ -96,14 +97,14 @@ public class CGeneratorVisitor implements Visitor {
             }
         }
 
-        ArrayList<FunNode> funListNode = ((ProgramNode) node).getFunListNode();
+        ArrayList<FunNode> funListNode = node.getFunListNode();
         for (FunNode funNode : funListNode) {
             if (funNode != null) {
                 (funNode).accept(this);
             }
         }
         code += "int main() {\n";
-        MainNode mainNode = ((ProgramNode) node).getMainNode();
+        MainNode mainNode = node.getMainNode();
         if (mainNode != null) {
             (mainNode).accept(this);
         }
@@ -116,7 +117,7 @@ public class CGeneratorVisitor implements Visitor {
 
     //VAR DECL NODE
     public void visit(VarDeclNode node) throws IOException {
-        VarDeclNode tmp = (VarDeclNode) node;
+        VarDeclNode tmp = node;
 
         if (tmp.getTypeVar() != null) {
 
@@ -135,9 +136,9 @@ public class CGeneratorVisitor implements Visitor {
     //FUN NODE
     public void visit(FunNode node) throws IOException {
         if (node instanceof FunNode) {
-            FunNode tmp = (FunNode) node;
+            FunNode tmp = node;
             if (tmp.getTypeVar() != null) {
-                code += typeC(tmp.getTypeVar().toString()) + " ";
+                code += typeC(tmp.getTypeVar()) + " ";
             } else {
                 code += "void ";
             }
@@ -175,7 +176,7 @@ public class CGeneratorVisitor implements Visitor {
 
     //PARAM DECL NODE
     public void visit(ParamDeclNode node) throws IOException {
-        ParamDeclNode tmp = (ParamDeclNode) node;
+        ParamDeclNode tmp = node;
         if (tmp.getTypeParam() != null) {
             code += typeC(tmp.getTypeParam()) + " ";
         }
@@ -185,7 +186,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(InitNode node) throws IOException {
-        InitNode tmp = (InitNode) node;
+        InitNode tmp = node;
         if (tmp.getLeafNode() != null) {    //if there is a leaf nod
             tmp.getLeafNode().accept(this);
         }
@@ -214,7 +215,7 @@ public class CGeneratorVisitor implements Visitor {
     //STATEMENTS NODE (EXPR)
     public void visit(WhileStatNode node) throws IOException {
         System.out.println("ExprNode");
-        WhileStatNode tmp = (WhileStatNode) node;
+        WhileStatNode tmp = node;
         code += "while (";
         if (tmp.getExprNode() != null) {
             tmp.getExprNode().accept(this);
@@ -341,6 +342,7 @@ public class CGeneratorVisitor implements Visitor {
         code += typeOperation(node.getName());
         node.getExprNode2().accept(this);
     }
+
 
     public void visit(UnOpNode node) throws IOException {
         System.out.println("UnOpNode");

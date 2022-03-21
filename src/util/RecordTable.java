@@ -1,92 +1,59 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class RecordTable {
-    private String symbol;
+    private String symbolName; // name of the symbol
     private String kind;   // var, fun
-    private Integer varType;
-    private List<Integer> paramsType = new ArrayList<>();
-    private Integer returnType;
+    private int type;   // int, bool, string, etc. --> valore del sym
+    private String scope;  // global, local, etc.
+
+    private List<String> params;
+    private String returnType;
+
+    public RecordTable(String scope) {
+        this.scope = scope;
+    }
 
     // case var
-    public RecordTable(String symbol, String kind, Integer varType) {
-        this.symbol = symbol;
+    public RecordTable(String symbol, String kind, int type) {
+        this.symbolName = symbol;
         this.kind = kind;
-        this.varType = varType;
+        this.type = type;
     }
+
     // case fun
-    public RecordTable(String symbol, String kind, List<Integer> paramsType, Integer returnType) {
-        this.symbol = symbol;
+    public RecordTable(String symbol, String kind, List<String> paramsType, String returnType) {
+        this.symbolName = symbol;
         this.kind = kind;
-        this.paramsType = paramsType;
+        this.params = paramsType;
         this.returnType = returnType;
     }
+
     // case fun no return
-    public RecordTable(String symbol, String kind, List<Integer> paramsType) {
-        this.symbol = symbol;
+    public RecordTable(String symbol, String kind, List<String> paramsType) {
+        this.symbolName = symbol;
         this.kind = kind;
-        this.paramsType = paramsType;
-        this.returnType = null;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public Integer getVarType() {
-        return varType;
-    }
-
-    public void setVarType(Integer varType) {
-        this.varType = varType;
-    }
-
-    public List<Integer> getParamsType() {
-        return paramsType;
-    }
-
-    public void setParamsType(List<Integer> paramsType) {
-        this.paramsType = paramsType;
-    }
-
-    public Integer getReturnType() {
-        return returnType;
-    }
-
-    public void setReturnType(Integer returnType) {
-        this.returnType = returnType;
+        this.params = paramsType;
+        this.returnType = "VOID";
     }
 
     @Override
     public String toString() {
         if (kind != null) {
-            if (kind.equals("var")) {
+            if (kind.equalsIgnoreCase("var")) {
                 return "SymbolTableRecord{" +
-                        "symbol='" + symbol + '\'' +
+                        "symbol='" + symbolName + '\'' +
                         ", kind='" + kind + '\'' +
-                        ", varType=" + varType +
+                        ", varType=" + type +
                         '}';
-            } else if (kind.equals("fun")) {
+            } else if (kind.equalsIgnoreCase("fun")) {
                 String tmpParams = "";
                 String tmpReturn = "";
-                if (paramsType != null) {
-                    for (Integer tmp : paramsType) {
-                        tmpParams += tmp + " ";
+                if (params != null) {
+                    for (String tmp : params) {
+                        tmpParams += tmp;
                     }
                 }
                 if (returnType != null) {
@@ -94,7 +61,7 @@ public class RecordTable {
                 }
 
                 return "SymbolTableRecord{" +
-                        "symbol='" + symbol + '\'' +
+                        "symbol='" + symbolName + '\'' +
                         ", kind='" + kind + '\'' +
                         ", paramsType=" + tmpParams +
                         ", returnType=" + tmpReturn +

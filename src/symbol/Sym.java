@@ -6,7 +6,8 @@ package symbol;
 /** CUP generated class containing symbol constants. */
 public class Sym {
   /* terminals */
-  public static final int POW = 12;
+  public static final int VOID = 999;
+    public static final int POW = 12;
   public static final int GE = 7;
   public static final int INTEGER = 33;
   public static final int INTEGER_CONST = 21;
