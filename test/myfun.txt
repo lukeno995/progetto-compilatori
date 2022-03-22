@@ -2,6 +2,7 @@ fun somma(real a, real b): real
   real  result;
   ? 'Somma: ';
   result  := a + b;
+
   return result;
 end fun;
 

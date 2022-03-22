@@ -1,4 +1,4 @@
-package visitor.typechecker;
+package visitor.semantic;
 
 import exception.FatalError;
 import exception.TypeMismatchException;

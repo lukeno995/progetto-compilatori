@@ -1,6 +1,6 @@
 import nodes.ProgramNode;
 import visitor.clang.CGeneratorVisitor;
-import visitor.semantic.SemanticVisitor;
+import visitor.semantic.ScopeVisitor;
 
 import java.io.File;
 import java.io.FileReader;
@@ -23,8 +23,8 @@ public class Main {
 
 
         //semantica vistor scope
-        SemanticVisitor semanticVisitor = new SemanticVisitor();
-        programOp.accept(semanticVisitor);
+        ScopeVisitor scopeVisitor = new ScopeVisitor();
+        programOp.accept(scopeVisitor);
 
 
         //visitor typecheck-regole d'inferenza

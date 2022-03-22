@@ -10,7 +10,7 @@ import java_cup.runtime.*;
 
 %eofval{
 	return new symbol(Sym.EOF,new String("END OF FILE"));
-    %eofval}
+%eofval}
 %eofclose
 // Abbreviations for regular expressions
 LineTerminator = \r|\n|\r\n
@@ -122,7 +122,7 @@ number = ((\+|-)?({digit}+)(\.{digit}+)?)
 \t { string.append("\t"); }
 
 <<EOF>> {return new Symbol(Sym.error, "STRINGA COSTANTE NON COMPLETATA: "+ string.toString()); }
-         }
+}
 
 {WhiteSpace} { /* ignore */ }
 [^]           { throw new Error("\n\nIllegal character < "+ yytext()+" >\n"); }
