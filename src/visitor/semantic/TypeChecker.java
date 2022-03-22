@@ -2,6 +2,7 @@ package visitor.semantic;
 
 import exception.FatalError;
 import exception.TypeMismatchException;
+import symbol.Sym;
 
 public class TypeChecker {
     //VALORI DI CONTROLLI PER IL CHECKER
@@ -20,12 +21,14 @@ public class TypeChecker {
     public static final String BOOLEANOP = "BOOLEANOP";
     public static final String CONDITIONAL = "CONDITIONAL";
 
-    public static String typeCheckUnaryOp(String op, String type) throws TypeMismatchException, FatalError {
+    public static String typeCheckUnaryOp(String op, int type) throws TypeMismatchException, FatalError {
         if (op.equals(UMINUSOP)) {
-            return typeCheckUminusOp(type);
+            return "";
+            //return typeCheckUminusOp(type);
 
         } else if (op.equals(NOTOP)) {
-            return typeCheckNotOp(type);
+            return"";
+            //return typeCheckNotOp(type);
 
         } else if (op.equals(CONDITIONAL)) {
             return typeCheckConditionalOp(type);
@@ -52,8 +55,8 @@ public class TypeChecker {
         }
     }
 
-    private static String typeCheckConditionalOp(String type) throws TypeMismatchException {
-        if (type.equals(BOOL)) {
+    private static String typeCheckConditionalOp(int type) throws TypeMismatchException {
+        if (type == Sym.BOOL) {
             return VOID;
         } else {
             throw new TypeMismatchException("L'espressione nella condizione di un costrutto if, elif e while deve essere di tipo bool. Fornita: " + type);

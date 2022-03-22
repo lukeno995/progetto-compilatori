@@ -220,7 +220,9 @@ public class ScopeVisitor implements Visitor {
                 statNode.accept(this);
             }
         }
+
         stackScope.pop();
+        node.accept(this);
     }
 
     void visitElseStatNode(ElseNode node) {
