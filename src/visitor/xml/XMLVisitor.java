@@ -273,6 +273,15 @@ public class XMLVisitor implements Visitor {
                 xmlString += ((RelOpNode) node).getExprNode2().accept(this);
                 xmlString += "</RelOpNode> ";
             }
+
+            if (node instanceof OrOPNode) {
+                xmlString += "<OrOPNode> ";
+                xmlString += ((OrOPNode) node).getExprNode1().accept(this);
+                xmlString += ((OrOPNode) node).getName();
+                xmlString += ((OrOPNode) node).getExprNode2().accept(this);
+                xmlString += "</OrOPNode> ";
+            }
+
             if (node instanceof UnOpNode) {
                 xmlString += "<UnOpNode> ";
                 xmlString += ((UnOpNode) node).getExprNode1().accept(this);

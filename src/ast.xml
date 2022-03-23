@@ -1,176 +1,134 @@
-<ProgramNode> <FunNode> (ID,somma)
-    <ParamDeclNode> <Type>REAL</Type>
-        (ID,a)
-    </ParamDeclNode> <ParamDeclNode> <Type>REAL</Type>
-        (ID,b)
-    </ParamDeclNode> <VarDeclNode> <Type>REAL</Type>
-        <InitNode> (ID,result)
-            null </InitNode>
-    </VarDeclNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode> <AssignStatNode>(ID,result)
-        <BinOpNode> (ID,a)
-            PLUS(ID,b)
-        </BinOpNode> </AssignStatNode> <ReturnNode>(ID,result)
-    </ReturnNode>  </FunNode> <FunNode> (ID,moltiplica)
-    <ParamDeclNode> <Type>REAL</Type>
-        (ID,a)
-    </ParamDeclNode> <ParamDeclNode> <Type>REAL</Type>
-        (ID,b)
-    </ParamDeclNode> <VarDeclNode> <Type>REAL</Type>
-        <InitNode> (ID,result)
-            null </InitNode>
-    </VarDeclNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode> <IfStatNode><BinOpNode> <BinOpNode> (ID,a)
-        EQ<BinOpNode> (REAL_CONST,REAL_CONST)
-            OR(ID,b)
-        </BinOpNode> </BinOpNode> EQ(REAL_CONST,REAL_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        (REAL_CONST,REAL_CONST)
-    </AssignStatNode>
-        <ElseNode><AssignStatNode>(ID,result)
-            <BinOpNode> (ID,a)
-                TIMES(ID,b)
-            </BinOpNode> </AssignStatNode>
-        </ElseNode></IfStatNode> <ReturnNode>(ID,result)
-    </ReturnNode>  </FunNode> <FunNode> (ID,dividi)
-    <ParamDeclNode> <Type>REAL</Type>
-        (ID,a)
-    </ParamDeclNode> <ParamDeclNode> <Type>REAL</Type>
-        (ID,b)
-    </ParamDeclNode> <VarDeclNode> <Type>REAL</Type>
-        <InitNode> (ID,result)
-            null </InitNode>
-    </VarDeclNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode> <IfStatNode><BinOpNode> (ID,b)
-        EQ(REAL_CONST,REAL_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        (REAL_CONST,REAL_CONST)
-    </AssignStatNode>
-        <ElseNode><AssignStatNode>(ID,result)
-            <BinOpNode> (ID,a)
-                DIV(ID,b)
-            </BinOpNode> </AssignStatNode>
-        </ElseNode></IfStatNode> <ReturnNode>(ID,result)
-    </ReturnNode>  </FunNode> <FunNode> (ID,sottrai)
-    <ParamDeclNode> <Type>REAL</Type>
-        (ID,a)
-    </ParamDeclNode> <ParamDeclNode> <Type>REAL</Type>
-        (ID,b)
-    </ParamDeclNode> <VarDeclNode> <Type>REAL</Type>
-        <InitNode> (ID,result)
-            null </InitNode>
-    </VarDeclNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode> <IfStatNode><BinOpNode> (ID,a)
-        LT(ID,b)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        (REAL_CONST,REAL_CONST)
-    </AssignStatNode>
-        <ElseNode><AssignStatNode>(ID,result)
-            <BinOpNode> (ID,a)
-                MINUS(ID,b)
-            </BinOpNode> </AssignStatNode>
-        </ElseNode></IfStatNode> <ReturnNode>(ID,result)
-    </ReturnNode>  </FunNode> <FunNode> (ID,stampa)
-    <ParamDeclNode> <Type>STRING</Type>
-        (ID,messaggio)
-    </ParamDeclNode> <VarDeclNode> <InitNode> (ID,i)
-        INTEGER_CONST </InitNode>
-    </VarDeclNode> <WhileStatNode><BinOpNode> (ID,i)
-        LE(INTEGER_CONST,INTEGER_CONST)
-    </BinOpNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode>
-        <AssignStatNode>(ID,i)
-            <BinOpNode> (ID,i)
-                PLUS(ID,incremento)
-            </BinOpNode> </AssignStatNode>
-        <VarDeclNode> <InitNode> (ID,incremento)
-            INTEGER_CONST </InitNode>
-        </VarDeclNode></WhileStatNode> <WriteStatNode>(ID,messaggio)
-    </WriteStatNode>  </FunNode> <MainNode> <VarDeclNode> <Type>REAL</Type>
-    <InitNode> (ID,a)
-        (REAL_CONST,REAL_CONST)
-        null </InitNode>
-</VarDeclNode> <VarDeclNode> <Type>REAL</Type>
-    <InitNode> (ID,b)
-        (REAL_CONST,REAL_CONST)
-        null </InitNode>
-</VarDeclNode> <VarDeclNode> <InitNode> (ID,op)
-    STRING_CONST </InitNode>
-</VarDeclNode> <VarDeclNode> <InitNode> (ID,ans)
-    STRING_CONST </InitNode>
-</VarDeclNode> <VarDeclNode> <Type>INTEGER</Type>
-    <InitNode> (ID,operator)
-        (INTEGER_CONST,INTEGER_CONST)
-        null </InitNode>
-</VarDeclNode> <WhileStatNode><BinOpNode> (ID,ans)
-    EQ(STRING_CONST,STRING_CONST)
-</BinOpNode> <AssignStatNode>(ID,ans)
-    (STRING_CONST,STRING_CONST)
-</AssignStatNode>
-    <WriteStatNode>(ID,op)
-    </WriteStatNode>
-    <ReadStatNode>(ID,operator)
-        (STRING_CONST,STRING_CONST)
-    </ReadStatNode>
-    <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode>
-    <WriteStatNode>(ID,operator)
-    </WriteStatNode>
-    <ReadStatNode>(ID,a)
-        (STRING_CONST,STRING_CONST)
-    </ReadStatNode>
-    <ReadStatNode>(ID,b)
-        (STRING_CONST,STRING_CONST)
-    </ReadStatNode>
-    <IfStatNode><BinOpNode> (ID,operator)
-        EQ(INTEGER_CONST,INTEGER_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        <CallFunNode>(ID,somma)
+<ProgramNode>
+    <FunNode>(ID,moltiplica)
+        <ParamDeclNode>
+            <Type>REAL</Type>
             (ID,a)
-
+        </ParamDeclNode>
+        <ParamDeclNode>
+            <Type>REAL</Type>
             (ID,b)
+        </ParamDeclNode>
+        <VarDeclNode>
+            <Type>REAL</Type>
+            <InitNode>(ID,result)
+                null
+            </InitNode>
+        </VarDeclNode>
+        <WriteStatNode>
+            <ConstNode>(STRING_CONST,Moltiplicazione: )</ConstNode>
+        </WriteStatNode>
+        <IfStatNode>
+            <OrOPNode>
+                <RelOpNode>(ID,a) EQ
+                    <ConstNode>(REAL,0.0)</ConstNode>
+                </RelOpNode>
+                OR
+                <RelOpNode>(ID,b) EQ
+                    <ConstNode>(REAL,0.0)</ConstNode>
+                </RelOpNode>
+            </OrOPNode>
+            <AssignStatNode>(ID,result)
+                <ConstNode>(REAL,0.0)</ConstNode>
+            </AssignStatNode>
+            <ElseNode>
+                <AssignStatNode>(ID,result)
+                    <BinOpNode>(ID,a)
+                        TIMES(ID,b)
+                    </BinOpNode>
+                </AssignStatNode>
+            </ElseNode>
+        </IfStatNode>
+        <ReturnNode>(ID,result)
+        </ReturnNode>
+    </FunNode>
+    <MainNode>
+        <VarDeclNode>
+            <Type>REAL</Type>
+            <InitNode>(ID,a)
+                <ConstNode>(REAL,0.0)</ConstNode>
+                null
+            </InitNode>
+        </VarDeclNode>
+        <VarDeclNode>
+            <Type>REAL</Type>
+            <InitNode>(ID,b)
+                <ConstNode>(REAL,0.0)</ConstNode>
+                null
+            </InitNode>
+        </VarDeclNode>
+        <VarDeclNode>
+            <InitNode>(ID,op)
+                ConstNode{nameID='STRING_CONST', value=1. addizione 2. moltiplicazione 3. divisione 4. sottrazione 5.
+                esci}
+            </InitNode>
+        </VarDeclNode>
+        <VarDeclNode>
+            <InitNode>(ID,ans)
+                ConstNode{nameID='STRING_CONST', value=si}
+            </InitNode>
+        </VarDeclNode>
+        <VarDeclNode>
+            <Type>INTEGER</Type>
+            <InitNode>(ID,operator)
+                <ConstNode>(INTEGER,0)</ConstNode>
+                null
+            </InitNode>
+        </VarDeclNode>
+        <WhileStatNode>
+            <RelOpNode>(ID,ans)
+                EQ
+                <ConstNode>(STRING_CONST,si)</ConstNode>
+            </RelOpNode>
+            <AssignStatNode>(ID,ans)
+                <ConstNode>(STRING_CONST,)</ConstNode>
+            </AssignStatNode>
+            <WriteStatNode>(ID,op)
+            </WriteStatNode>
+            <ReadStatNode>(ID,operator)
+                <ConstNode>(STRING_CONST,Seleziona loperazione con un intero:)</ConstNode>
+            </ReadStatNode>
+            <WriteStatNode>
+                <ConstNode>(STRING_CONST,Operatore selezionato:)</ConstNode>
+            </WriteStatNode>
+            <WriteStatNode>(ID,operator)
+            </WriteStatNode>
+            <ReadStatNode>(ID,a)
+                <ConstNode>(STRING_CONST,inserisci primo operando con un reale:)</ConstNode>
+            </ReadStatNode>
+            <ReadStatNode>(ID,b)
+                <ConstNode>(STRING_CONST,inserisci secondo operando con un reale:)</ConstNode>
+            </ReadStatNode>
+            <IfStatNode>
+                <RelOpNode>(ID,operator)
+                    EQ
+                    <ConstNode>(INTEGER,2)</ConstNode>
+                </RelOpNode>
+                <AssignStatNode>(ID,result)
+                    <CallFunNode>(ID,moltiplica)
+                        (ID,a)
 
-        </CallFunNode></AssignStatNode>
-    </IfStatNode>
-    <IfStatNode><BinOpNode> (ID,operator)
-        EQ(INTEGER_CONST,INTEGER_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        <CallFunNode>(ID,moltiplica)
-            (ID,a)
+                        (ID,b)
 
-            (ID,b)
-
-        </CallFunNode></AssignStatNode>
-    </IfStatNode>
-    <IfStatNode><BinOpNode> (ID,operator)
-        EQ(INTEGER_CONST,INTEGER_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        <CallFunNode>(ID,dividi)
-            (ID,a)
-
-            (ID,b)
-
-        </CallFunNode></AssignStatNode>
-    </IfStatNode>
-    <IfStatNode><BinOpNode> (ID,operator)
-        EQ(INTEGER_CONST,INTEGER_CONST)
-    </BinOpNode> <AssignStatNode>(ID,result)
-        <CallFunNode>(ID,sottrai)
-            (ID,a)
-
-            (ID,b)
-
-        </CallFunNode></AssignStatNode>
-    </IfStatNode>
-    <CallFunNode>(ID,stampa)
-        <BinOpNode> (STRING_CONST,STRING_CONST)
-            STR_CONCAT(ID,result)
-        </BinOpNode>
-    </CallFunNode>
-    <WriteStatNode>(STRING_CONST,STRING_CONST)
-    </WriteStatNode>
-    <ReadStatNode>(ID,ans)
-    </ReadStatNode>
-</WhileStatNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-</WriteStatNode> <WriteStatNode>(STRING_CONST,STRING_CONST)
-</WriteStatNode>  </MainNode> </ProgramNode>
+                    </CallFunNode>
+                </AssignStatNode>
+            </IfStatNode>
+            <CallFunNode>(ID,stampa)
+                <BinOpNode>
+                    <ConstNode>(STRING_CONST,Il risultato della tua operazione è )</ConstNode>
+                    STR_CONCAT(ID,result)
+                </BinOpNode>
+            </CallFunNode>
+            <WriteStatNode>
+                <ConstNode>(STRING_CONST,vuoi continuare? (si/no))</ConstNode>
+            </WriteStatNode>
+            <ReadStatNode>(ID,ans)
+            </ReadStatNode>
+        </WhileStatNode>
+        <WriteStatNode>
+            <ConstNode>(STRING_CONST,)</ConstNode>
+        </WriteStatNode>
+        <WriteStatNode>
+            <ConstNode>(STRING_CONST,ciao)</ConstNode>
+        </WriteStatNode>
+    </MainNode>
+</ProgramNode>

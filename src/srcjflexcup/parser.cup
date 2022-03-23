@@ -53,9 +53,10 @@ precedence right POW;
 precedence left TIMES,DIV,DIVINT;
 precedence left PLUS, MINUS;
 precedence left STR_CONCAT;
+precedence left AND,OR;
 precedence left EQ, NE, LT, LE, GT, GE;
 precedence right NOT;
-precedence left AND,OR;
+
 
 
 /*grammar*/
@@ -142,8 +143,8 @@ ExprList ::= Expr:exprNode {: RESULT = new ArrayList<ExprNode>() {{ add(exprNode
 	| OUTPAR ID:id {:      RESULT = new ArrayList<ExprNode>() {{ add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); }};  :}
 	| OUTPAR ID:id COMMA ExprList:exprListNode {: RESULT =exprListNode; exprListNode.add(new OutParNode("OUTPAR", new LeafNode("ID", id) )); :};
 
-Expr ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER_CONST", iconst); :}
-    | REAL_CONST:iconst{: RESULT = new  ConstNode("REAL_CONST", iconst); :}
+Expr ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER", iconst); :}
+    | REAL_CONST:iconst{: RESULT = new  ConstNode("REAL", iconst); :}
     | TRUE:iconst {: RESULT = new  ConstNode("TRUE", iconst); :}
     | FALSE:iconst  {: RESULT = new  ConstNode("FALSE", iconst); :}
     | STRING_CONST:iconst {: RESULT = new  ConstNode("STRING_CONST", iconst); :}
@@ -157,7 +158,7 @@ Expr ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER_CONST", iconst
 	| Expr:exprNode1  AND  Expr:exprNode2 {: RESULT = new BinOpNode("AND", exprNode1, exprNode2); :}
 	| Expr:exprNode1  POW  Expr:exprNode2  {: RESULT = new BinOpNode("POW", exprNode1, exprNode2); :}
 	| Expr:exprNode1  STR_CONCAT  Expr:exprNode2 {: RESULT = new BinOpNode("STR_CONCAT", exprNode1, exprNode2); :}
-	| Expr:exprNode1  OR  Expr:exprNode2 {: RESULT = new RelOpNode("OR", exprNode1, exprNode2); :}
+	| Expr:exprNode1  OR  Expr:exprNode2 {: RESULT = new OrOPNode("OR", exprNode1, exprNode2); :}
 	| Expr:exprNode1  GT  Expr:exprNode2 {: RESULT = new RelOpNode("GT", exprNode1, exprNode2); :}
 	| Expr:exprNode1  GE  Expr:exprNode2 {: RESULT = new RelOpNode("GE", exprNode1, exprNode2); :}
 	| Expr:exprNode1  LT  Expr:exprNode2 {: RESULT = new RelOpNode("LT", exprNode1, exprNode2); :}

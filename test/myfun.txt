@@ -56,6 +56,7 @@ end fun;
 main
     real a := 0.0;
     real b := 0.0;
+    real result;
     var op :=
     '1. addizione
      2. moltiplicazione
@@ -64,6 +65,7 @@ main
      5. esci';
     var ans := 'si';
     integer operator := 0;
+
 
     while ans = 'si' loop
         ans := '';
@@ -75,24 +77,15 @@ main
         % a 'inserisci primo operando con un reale:';
         % b 'inserisci secondo operando con un reale:';
 
-       if operator = 1 then
-                result := somma(a, b);
-       end if;
+
        if operator = 2 then
-                 result := moltiplica(a, b);
+           result := moltiplica(a, b);
        end if;
-       if operator = 3 then
-                 result := dividi(a, b);
-       end if;
-       if operator = 4 then
-                result := sottrai(a, b);
-       end if;
+
        stampa('Il risultato della tua operazione è ' & result);
     ?: 'vuoi continuare? (si/no)';
     % ans;
     end loop;
-    ?. '';
     ? 'ciao';
 end main;
-
 

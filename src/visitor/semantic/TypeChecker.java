@@ -17,8 +17,7 @@ public class TypeChecker {
 
     public static int typeCheckUnaryOp(String op, int type) throws TypeMismatchException, FatalError {
         if (op.equals(UMINUSOP)) {
-            //return typeCheckUminusOp(type);
-            return 0;
+            return typeCheckUminusOp(type);
 
         } else if (op.equals(NOTOP)) {
             //return"";
@@ -43,8 +42,7 @@ public class TypeChecker {
             return typeCheckAssignOp(type1, type2);
 
         } else if (op.equals(BOOLEANOP)) {
-            //  return typeCheckOrAndOp(type1, type2);
-            return 0;
+            return typeCheckOrAndOp(type1, type2);
 
         } else {
             throw new TypeMismatchException("Operazione " + op + " non verificabile nel checker binario");
@@ -119,7 +117,6 @@ public class TypeChecker {
             throw new TypeMismatchException("Non possiamo concatenare " + type2 + " e " + type1);
         }
     }*/
-
 
     //AND, OR boolean boolean boolean
     private static int typeCheckOrAndOp(int type1, int type2) throws TypeMismatchException {

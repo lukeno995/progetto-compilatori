@@ -2,6 +2,7 @@ import nodes.ProgramNode;
 import visitor.clang.CGeneratorVisitor;
 import visitor.semantic.ScopeVisitor;
 import visitor.semantic.SemanticVisitor;
+import visitor.xml.XMLVisitor;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +12,7 @@ public class Main {
         String inPathFile = args[0];
 
         //controllo sul file in input: vedere se il file è ".txt"
-        if (!(inPathFile.endsWith(".txt"))){
+        if (!(inPathFile.endsWith(".txt"))) {
             System.err.println("Dare in input un file .txt");
             System.exit(1);
         }
@@ -19,8 +20,8 @@ public class Main {
 
         ProgramNode programOp = (ProgramNode) p.debug_parse().value;
 //
-//        XMLVisitor xmlVisitor = new XMLVisitor();
-//        System.out.println(programOp.accept(xmlVisitor));
+        XMLVisitor xmlVisitor = new XMLVisitor();
+        System.out.println(programOp.accept(xmlVisitor));
 
 
         //semantica vistor scope
