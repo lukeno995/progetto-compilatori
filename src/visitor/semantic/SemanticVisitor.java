@@ -171,6 +171,9 @@ public class SemanticVisitor implements Visitor {
     }
 
     void visitWriteStatNode(WriteStatNode ast) {
+        ExprNode exprNode = ast.getExprNode();
+        exprNode.accept(this);
+        ast.setType(exprNode.getType());
     }
 
     void visitReadStatNode(ReadStatNode ast) {
