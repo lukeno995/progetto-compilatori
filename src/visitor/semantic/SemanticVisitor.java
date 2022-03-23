@@ -40,11 +40,12 @@ public class SemanticVisitor implements Visitor {
         else if (ast instanceof InitNode) {
             visitInitNode((InitNode) ast);
         }
-        else if (ast instanceof StatNode) {
-            visitStatNode((StatNode) ast);
-        }
         else if (ast instanceof AssignStatNode) {
-            visitAssignStatNode((AssignStatNode) ast);
+            try {
+                visitAssignStatNode((AssignStatNode) ast);
+            } catch (TypeMismatchException e) {
+                e.printStackTrace();
+            }
         }
         else if (ast instanceof ReadStatNode) {
             visitReadStatNode((ReadStatNode) ast);
@@ -59,7 +60,11 @@ public class SemanticVisitor implements Visitor {
             visitCallFunNode((CallFunNode) ast);
         }
         else if (ast instanceof BinOpNode) {
-            visitBinOpNode((BinOpNode) ast);
+            try {
+                visitBinOpNode((BinOpNode) ast);
+            } catch (TypeMismatchException e) {
+                e.printStackTrace();
+            }
         }
         else if (ast instanceof UnOpNode) {
             visitUnOpNode((UnOpNode) ast);
@@ -73,27 +78,21 @@ public class SemanticVisitor implements Visitor {
         else if (ast instanceof WhileStatNode) {
             try {
                 visitWhileStatNode((WhileStatNode) ast);
-            } catch (TypeMismatchException e) {
-                e.printStackTrace();
-            } catch (FatalError e) {
+            } catch (TypeMismatchException | FatalError e) {
                 e.printStackTrace();
             }
         }
         else if (ast instanceof IfStatNode) {
             try {
                 visitIfStatNode((IfStatNode) ast);
-            } catch (TypeMismatchException e) {
-                e.printStackTrace();
-            } catch (FatalError e) {
+            } catch (TypeMismatchException | FatalError e) {
                 e.printStackTrace();
             }
         }
         else if (ast instanceof ElseNode) {
             try {
                 visitElseStatNode((ElseNode) ast);
-            } catch (TypeMismatchException e) {
-                e.printStackTrace();
-            } catch (FatalError e) {
+            } catch (TypeMismatchException | FatalError e) {
                 e.printStackTrace();
             }
         }
@@ -109,7 +108,18 @@ public class SemanticVisitor implements Visitor {
     void visitUnOpNode(UnOpNode ast) {
     }
 
-    void visitBinOpNode(BinOpNode ast) {
+    void visitBinOpNode(BinOpNode ast) throws TypeMismatchException {
+        ExprNode left = ast.getExprNode1();
+        ExprNode right = ast.getExprNode2();
+        int resultType = TypeChecker.typeCheckBinaryOp(TypeChecker.BINARYOP, left.getType(), right.getType());
+        ast.setType(resultType);
+    }
+
+    void vistRelOpNode(RelOpNode ast) throws TypeMismatchException {
+        ExprNode left = ast.getExprNode1();
+        ExprNode right = ast.getExprNode2();
+        int resultType = TypeChecker.typeCheckBinaryOp(TypeChecker.RELOP, left.getType(), right.getType());
+        ast.setType(resultType);
     }
 
     void visitCallFunNode(CallFunNode ast) {
@@ -122,13 +132,26 @@ public class SemanticVisitor implements Visitor {
     }
 
     void visitReadStatNode(ReadStatNode ast) {
+        for (LeafNode leafNode : ast.getIdListNode()) {
+            leafNode.accept(this);
+        }
+        ast.setType(Sym.VOID);
     }
 
-    void visitAssignStatNode(AssignStatNode node) {
+    void visitAssignStatNode(AssignStatNode node) throws TypeMismatchException {
+
+        LeafNode leafNode = node.getLeafNode();
+        leafNode.accept(this);
+        int typeLeaf = leafNode.getType();
+
+        ExprNode exprNode = node.getExprNode();
+        exprNode.accept(this);
+        int typeExpr = exprNode.getType();
+
+        TypeChecker.typeCheckBinaryOp(TypeChecker.ASSIGNOP, typeLeaf, typeExpr);
+        node.setType(Sym.VOID);
     }
 
-    void visitStatNode(StatNode node) {
-    }
 
     void visitInitNode(InitNode node) {
 
@@ -158,14 +181,26 @@ public class SemanticVisitor implements Visitor {
         stackScope.pop();
     }
 
+
+    //problam
     void visitVarDeclNode(VarDeclNode node) {
-        String varName = node.getNameNode();
         //controllo se è già presente
-        if (!stackScope.peek().containsKey(varName)) {
-            throw new Error("Identificatore già dichiarato all'interno dello scope: " + varName);
+
+        for (InitNode idInitOp : node.getInitNodes()) {
+            if (idInitOp != null) {
+                String idName = idInitOp.getLeafNode().getNameId();
+
+                idInitOp.getLeafNode().setType(node.getType());
+                idInitOp.accept(this);
+                if (!stackScope.peek().containsKey(idName)) {
+                    throw new Error("Identificatore già dichiarato all'interno dello scope: " + idName);
+                }
+                RecordTable symbolTableRecord = stackScope.peek().get(idName);
+                node.setType(symbolTableRecord.getType());
+            }
         }
-        RecordTable symbolTableRecord = stackScope.peek().get(varName);
-        node.setType(symbolTableRecord.getType());
+
+
     }
 
     void visitFunNode(FunNode node) {

@@ -110,7 +110,10 @@ public class ScopeVisitor implements Visitor {
     void visitFunNode(FunNode node) {
         int type = Sym.VOID;
         SymbolTable symbolTableTemp = stackScope.peek();
-        type = InferenceType.inferenceType(node.getTypeVar());
+        node.setType(Sym.VOID);
+        if (node.getTypeVar() != null) {
+            type = InferenceType.inferenceType(node.getTypeVar());
+        }
         FunNode tmp = node;
         String funName = node.getLeafNode().getNameId();
         if (!symbolTableTemp.containsKey(funName)) {
@@ -139,7 +142,7 @@ public class ScopeVisitor implements Visitor {
                     statNode.accept(this);
                 }
             }
-
+            node.setSymbolTable(stackScope.peek());
             node.setType(type);
             stackScope.pop();
         }
@@ -222,7 +225,9 @@ public class ScopeVisitor implements Visitor {
         }
 
         stackScope.pop();
-        node.accept(this);
+        if (node.getElseNode() != null) {
+            node.getElseNode().accept(this);
+        }
     }
 
     void visitElseStatNode(ElseNode node) {

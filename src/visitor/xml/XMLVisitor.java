@@ -1,8 +1,6 @@
 package visitor.xml;
 
 import nodes.*;
-import visitor.xml.AbstractSyntaxNode;
-import visitor.xml.Visitor;
 
 import java.util.ArrayList;
 
@@ -266,6 +264,14 @@ public class XMLVisitor implements Visitor {
                 xmlString += ((BinOpNode) node).getName();
                 xmlString += ((BinOpNode) node).getExprNode2().accept(this);
                 xmlString += "</BinOpNode> ";
+            }
+
+            if (node instanceof RelOpNode) {
+                xmlString += "<RelOpNode> ";
+                xmlString += ((RelOpNode) node).getExprNode1().accept(this);
+                xmlString += ((RelOpNode) node).getName();
+                xmlString += ((RelOpNode) node).getExprNode2().accept(this);
+                xmlString += "</RelOpNode> ";
             }
             if (node instanceof UnOpNode) {
                 xmlString += "<UnOpNode> ";
