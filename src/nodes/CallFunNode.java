@@ -21,6 +21,10 @@ public class CallFunNode extends StatNode{
         this.leafNode = leafNode;
     }
 
+    public ArrayList<ExprNode> getExprRefsNodeReverse() {
+        Collections.reverse(exprRefsNode);
+        return exprRefsNode;
+    }
     public ArrayList<ExprNode> getExprRefsNode() {
         Collections.reverse(exprRefsNode);
         return exprRefsNode;
