@@ -290,7 +290,7 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(ReadStatNode node) throws IOException {
         ArrayList<LeafNode> idListNode = node.getIdListNode();
-        code += "\nscanf(";
+        code += "\nscanf(\"";
         if (node.getExprNode() != null) {
             node.getExprNode().accept(this);
         } else {
