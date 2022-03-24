@@ -274,12 +274,21 @@ public class XMLVisitor implements Visitor {
                 xmlString += "</RelOpNode> ";
             }
 
-            if (node instanceof OrOPNode) {
-                xmlString += "<OrOPNode> ";
-                xmlString += ((OrOPNode) node).getExprNode1().accept(this);
-                xmlString += ((OrOPNode) node).getName();
-                xmlString += ((OrOPNode) node).getExprNode2().accept(this);
-                xmlString += "</OrOPNode> ";
+            if (node instanceof ConcatNode) {
+                xmlString += "<ConcatNode> ";
+                xmlString += ((ConcatNode) node).getExprNode1().accept(this);
+                xmlString += ((ConcatNode) node).getName();
+                xmlString += ((ConcatNode) node).getExprNode2().accept(this);
+                xmlString += "</ConcatNode> ";
+            }
+
+
+            if (node instanceof OrAndOpNode) {
+                xmlString += "<OrAndOpNode> ";
+                xmlString += ((OrAndOpNode) node).getExprNode1().accept(this);
+                xmlString += ((OrAndOpNode) node).getName();
+                xmlString += ((OrAndOpNode) node).getExprNode2().accept(this);
+                xmlString += "</OrAndOpNode> ";
             }
 
             if (node instanceof UnOpNode) {

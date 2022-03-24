@@ -1,6 +1,7 @@
 package visitor.clang;
 
 import nodes.*;
+import symbol.Sym;
 import visitor.xml.AbstractSyntaxNode;
 import visitor.xml.Visitor;
 
@@ -121,7 +122,7 @@ public class CGeneratorVisitor implements Visitor {
 
         if (tmp.getTypeVar() != null) {
 
-            code += typeC(tmp.getTypeVar()) + " ";
+            code += typeC(tmp.getType()) + " ";
         }
 
 
@@ -138,7 +139,7 @@ public class CGeneratorVisitor implements Visitor {
         if (node instanceof FunNode) {
             FunNode tmp = node;
             if (tmp.getTypeVar() != null) {
-                code += typeC(tmp.getTypeVar()) + " ";
+                code += typeC(tmp.getType()) + " ";
             } else {
                 code += "void ";
             }
@@ -178,7 +179,7 @@ public class CGeneratorVisitor implements Visitor {
     public void visit(ParamDeclNode node) throws IOException {
         ParamDeclNode tmp = node;
         if (tmp.getTypeParam() != null) {
-            code += typeC(tmp.getTypeParam()) + " ";
+            code += typeC(tmp.getType()) + " ";
         }
         if (tmp.getLeafNode() != null) {
             tmp.getLeafNode().accept(this);
@@ -278,7 +279,7 @@ public class CGeneratorVisitor implements Visitor {
         System.out.println("AssignStatNode");
         node.getLeafNode().accept(this);
         code += " = ";
-        if(node.getExprNode() instanceof CallFunNode){
+        if (node.getExprNode() instanceof CallFunNode) {
             node.getExprNode().accept(this);
         } else {
             node.getExprNode().accept(this);
@@ -288,13 +289,26 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(ReadStatNode node) throws IOException {
-        ArrayList<LeafNode> idListNode  = node.getIdListNode();
-        code = code +"\nscanf(\"";
-        for (LeafNode id : idListNode) {
-            id.getType();
+        ArrayList<LeafNode> idListNode = node.getIdListNode();
+        code += "\nscanf(";
+        if (node.getExprNode() != null) {
+            node.getExprNode().accept(this);
+        } else {
+            code += "\"";
         }
-        code = code +");\n";
-
+        ArrayList<LeafNode> idList = node.getIdListNode();
+        for (LeafNode id : idListNode) {
+            code += formatSpecifier(id.getType());
+        }
+        code += "\", ";
+        for (int i = 0; i < idList.size(); i++) {
+            if (i <= idList.size() - 1) {
+                code += "&" + idList.get(i).getNameId();
+            } else {
+                code += "&" + idList.get(i).getNameId() + ", ";
+            }
+            code = code + ");\n";
+        }
     }
 
     public void visit(WriteStatNode node) throws IOException {
@@ -353,16 +367,29 @@ public class CGeneratorVisitor implements Visitor {
         code += node.getNameId();
     }
 
-    private String typeC(String typeMyfun) {
+    private String typeC(int typeMyfun) {
         switch (typeMyfun) {
-            case "INTEGER":
+            case Sym.INTEGER:
                 return "int";
-            case "REAL":
+            case Sym.REAL:
                 return "float";
-            case "STRING":
+            case Sym.STRING:
                 return "char*";
         }
         return "";
+    }
+
+    private String formatSpecifier(int type) {
+        switch (type) {
+            case Sym.INTEGER:
+                return "%d";
+            case Sym.REAL:
+                return "%f";
+            case Sym.STRING:
+                return "%s";
+            default:
+                return "";
+        }
     }
 
 
@@ -401,8 +428,8 @@ public class CGeneratorVisitor implements Visitor {
 
     private void typeConst(String typeConst, Object value) {
         switch (typeConst) {
-            case "INTEGER_CONST", "REAL_CONST" ->  code += (String) value;
-            case "STRING_CONST" -> code += "\"" + value + "\"";
+            case "INTEGER_CONST", "REAL_CONST" -> code += (String) value;
+            case "STRING_CONST" -> code += value;
         }
     }
 }

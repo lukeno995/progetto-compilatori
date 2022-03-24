@@ -1,10 +1,10 @@
 package nodes;
 
-public class OrOPNode extends ExprNode {
+public class ConcatNode extends ExprNode {
     private ExprNode exprNode1;
     private ExprNode exprNode2;
 
-    public OrOPNode(String name, ExprNode exprNode1, ExprNode exprNode2) {
+    public ConcatNode(String name, ExprNode exprNode1, ExprNode exprNode2) {
         super(name);
         this.exprNode1 = exprNode1;
         this.exprNode2 = exprNode2;

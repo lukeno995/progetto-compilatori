@@ -14,15 +14,16 @@ public class TypeChecker {
     public static final String NOTOP = "NOTOP";
     public static final String BOOLEANOP = "BOOLEANOP";
     public static final String CONDITIONAL = "CONDITIONAL";
+    public static final String STRINGCONCAT = "CONCAT";
+
 
     public static int typeCheckUnaryOp(String op, int type) throws TypeMismatchException, FatalError {
         if (op.equals(UMINUSOP)) {
             return typeCheckUminusOp(type);
 
         } else if (op.equals(NOTOP)) {
-            //return"";
-            //return typeCheckNotOp(type);
-            return 0;
+            return typeCheckNotOp(type);
+
 
         } else if (op.equals(CONDITIONAL)) {
             return typeCheckConditionalOp(type);
@@ -44,6 +45,8 @@ public class TypeChecker {
         } else if (op.equals(BOOLEANOP)) {
             return typeCheckOrAndOp(type1, type2);
 
+        } else if (op.equals(STRINGCONCAT)) {
+            return typeCheckStringConcat(type1, type2);
         } else {
             throw new TypeMismatchException("Operazione " + op + " non verificabile nel checker binario");
         }
@@ -110,13 +113,19 @@ public class TypeChecker {
     }
 
     //STR CONCAT string string string
-  /*  private static String typeCheckStringConcat(String type1, String type2) throws TypeMismatchException {
-        if (type1.equals(STRING) && type2.equals(STRING)) {
-            return STRING;
+    private static int typeCheckStringConcat(int type1, int type2) throws TypeMismatchException {
+        if (type1 == Sym.STRING && type2 == Sym.REAL) return Sym.STRING;
+        if (type1 == Sym.REAL && type2 == Sym.STRING) return Sym.STRING;
+        if (type1 == Sym.INTEGER && type2 == Sym.STRING) return Sym.STRING;
+        if (type1 == Sym.STRING && type2 == Sym.INTEGER) return Sym.STRING;
+        if (type1 == Sym.BOOL && type2 == Sym.STRING) return Sym.STRING;
+        if (type1 == Sym.STRING && type2 == Sym.BOOL) return Sym.STRING;
+        if (type1 == Sym.STRING && type2 == Sym.STRING) {
+            return Sym.STRING;
         } else {
             throw new TypeMismatchException("Non possiamo concatenare " + type2 + " e " + type1);
         }
-    }*/
+    }
 
     //AND, OR boolean boolean boolean
     private static int typeCheckOrAndOp(int type1, int type2) throws TypeMismatchException {
@@ -139,14 +148,14 @@ public class TypeChecker {
         }
     }
 
-   /* private static int typeCheckNotOp(String type) throws TypeMismatchException {
+    private static int typeCheckNotOp(int type) throws TypeMismatchException {
         if (type == Sym.BOOL) {
             return Sym.BOOL;
         } else {
             throw new TypeMismatchException("Per l'operazione 'not' è richiesta una espressione di tipo bool. Fornita: " + type);
         }
 
-    }*/
+    }
 
 
 }

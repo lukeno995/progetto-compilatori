@@ -62,15 +62,27 @@ public class SemanticVisitor implements Visitor {
             } catch (TypeMismatchException e) {
                 e.printStackTrace();
             }
-        } else if (ast instanceof OrOPNode) {
+        } else if (ast instanceof ConcatNode) {
             try {
-                visitOrOpNode((OrOPNode) ast);
+                visitConcatNode((ConcatNode) ast);
+            } catch (TypeMismatchException e) {
+                e.printStackTrace();
+            }
+        } else if (ast instanceof OrAndOpNode) {
+            try {
+                visitOrOpNode((OrAndOpNode) ast);
             } catch (TypeMismatchException e) {
                 e.printStackTrace();
             }
         } else if (ast instanceof UnOpNode) {
             try {
                 visitUnOpNode((UnOpNode) ast);
+            } catch (FatalError | TypeMismatchException e) {
+                e.printStackTrace();
+            }
+        } else if (ast instanceof NotOpNode) {
+            try {
+                visitNotOpNode((NotOpNode) ast);
             } catch (FatalError | TypeMismatchException e) {
                 e.printStackTrace();
             }
@@ -109,6 +121,15 @@ public class SemanticVisitor implements Visitor {
         ast.setType(type);
     }
 
+    void visitConcatNode(ConcatNode node) throws TypeMismatchException {
+        ExprNode left = node.getExprNode1();
+        left.accept(this);
+        ExprNode right = node.getExprNode2();
+        right.accept(this);
+        int resultType = TypeChecker.typeCheckBinaryOp(TypeChecker.STRINGCONCAT, left.getType(), right.getType());
+        node.setType(resultType);
+    }
+
     void visitRelopNode(RelOpNode ast) throws TypeMismatchException {
         ExprNode left = ast.getExprNode1();
         left.accept(this);
@@ -118,12 +139,19 @@ public class SemanticVisitor implements Visitor {
         ast.setType(resultType);
     }
 
-    void visitOrOpNode(OrOPNode ast) throws TypeMismatchException {
+    void visitOrOpNode(OrAndOpNode ast) throws TypeMismatchException {
         ExprNode left = ast.getExprNode1();
         left.accept(this);
         ExprNode right = ast.getExprNode2();
         right.accept(this);
         int resultType = TypeChecker.typeCheckBinaryOp(TypeChecker.BOOLEANOP, left.getType(), right.getType());
+        ast.setType(resultType);
+    }
+
+    void visitNotOpNode(NotOpNode ast) throws TypeMismatchException, FatalError {
+        ExprNode left = ast.getExprNode1();
+        left.accept(this);
+        int resultType = TypeChecker.typeCheckUnaryOp(TypeChecker.NOTOP, left.getType());
         ast.setType(resultType);
     }
 
