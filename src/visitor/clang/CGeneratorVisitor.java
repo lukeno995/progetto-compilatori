@@ -294,7 +294,7 @@ public class CGeneratorVisitor implements Visitor {
         if (node.getExprNode() != null) {
             node.getExprNode().accept(this);
         } else {
-            code += "\"";
+            code += "";
         }
         ArrayList<LeafNode> idList = node.getIdListNode();
         for (LeafNode id : idListNode) {
