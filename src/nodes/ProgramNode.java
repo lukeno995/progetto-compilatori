@@ -18,8 +18,11 @@ public class ProgramNode extends AbstractSyntaxNode {
         this.mainNode = mainNode;
     }
 
-    public ArrayList<VarDeclNode> getVarDeclListNode() {
+    public ArrayList<VarDeclNode> getVarDeclListNodeReverse() {
         Collections.reverse(varDeclListNode);
+        return varDeclListNode;
+    }
+    public ArrayList<VarDeclNode> getVarDeclListNode() {
         return varDeclListNode;
     }
 
@@ -27,8 +30,12 @@ public class ProgramNode extends AbstractSyntaxNode {
         this.varDeclListNode = varDeclListNode;
     }
 
-    public ArrayList<FunNode> getFunListNode() {
+    public ArrayList<FunNode> getFunListNodeReverse() {
         Collections.reverse(funListNode);
+        return funListNode;
+    }
+
+    public ArrayList<FunNode> getFunListNode() {
         return funListNode;
     }
 

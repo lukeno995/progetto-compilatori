@@ -13,8 +13,12 @@ public class ReadStatNode extends StatNode{
         this.exprNode = exprNode;
     }
 
-    public ArrayList<LeafNode> getIdListNode() {
+    public ArrayList<LeafNode> getIdListNodeReverse() {
         Collections.reverse(idListNode);
+        return idListNode;
+    }
+
+    public ArrayList<LeafNode> getIdListNode() {
         return idListNode;
     }
 

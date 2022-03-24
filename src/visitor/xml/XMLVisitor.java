@@ -13,13 +13,13 @@ public class XMLVisitor implements Visitor {
         if (node instanceof ProgramNode) {
             if (node != null) {
                 xmlString = "<ProgramNode> ";
-                ArrayList<VarDeclNode> varDeclListNode = ((ProgramNode) node).getVarDeclListNode();
+                ArrayList<VarDeclNode> varDeclListNode = ((ProgramNode) node).getVarDeclListNodeReverse();
                 for (VarDeclNode varDeclNode : varDeclListNode) {
                     if (varDeclNode != null) {
                         xmlString += (varDeclNode).accept(this) + " ";
                     }
                 }
-                ArrayList<FunNode> funListNode = ((ProgramNode) node).getFunListNode();
+                ArrayList<FunNode> funListNode = ((ProgramNode) node).getFunListNodeReverse();
                 for (FunNode funNode : funListNode) {
                     if (funNode != null) {
                         xmlString += (funNode).accept(this) + " ";
@@ -36,13 +36,13 @@ public class XMLVisitor implements Visitor {
         if (node instanceof MainNode) {
             if (node != null) {
                 xmlString = "<MainNode> ";
-                ArrayList<VarDeclNode> varDeclListNode = ((MainNode) node).getVarDeclListNode();
+                ArrayList<VarDeclNode> varDeclListNode = ((MainNode) node).getVarDeclListNodeReverse();
                 for (VarDeclNode varDeclNode : varDeclListNode) {
                     if (varDeclNode != null) {
                         xmlString += (varDeclNode).accept(this) + " ";
                     }
                 }
-                ArrayList<StatNode> statListNode = ((MainNode) node).getStatListNode();
+                ArrayList<StatNode> statListNode = ((MainNode) node).getStatListNodeReverse();
                 for (StatNode statNode : statListNode) {
                     if (statNode != null) {
                         xmlString += (statNode).accept(this) + " ";
@@ -66,13 +66,13 @@ public class XMLVisitor implements Visitor {
                         xmlString += (paramDeclNode).accept(this) + " ";
                     }
                 }
-                ArrayList<VarDeclNode> varDeclListNode = ((FunNode) node).getVarDeclListNode();
+                ArrayList<VarDeclNode> varDeclListNode = ((FunNode) node).getVarDeclListNodeReverse();
                 for (VarDeclNode varDeclNode : varDeclListNode) {
                     if (varDeclNode != null) {
                         xmlString += (varDeclNode).accept(this) + " ";
                     }
                 }
-                ArrayList<StatNode> statNode = ((FunNode) node).getStatListNode();
+                ArrayList<StatNode> statNode = ((FunNode) node).getStatListNodeReverse();
                 for (StatNode statN : statNode) {
                     if (statN != null) {
                         xmlString += (statN).accept(this) + " ";
@@ -92,7 +92,7 @@ public class XMLVisitor implements Visitor {
                 if (((VarDeclNode) node).getTypeVar() != null) {
                     xmlString += "<Type>" + ((VarDeclNode) node).getTypeVar() + "</Type>\n";
                 }
-                ArrayList<InitNode> initNode = ((VarDeclNode) node).getInitNodes();
+                ArrayList<InitNode> initNode = ((VarDeclNode) node).getInitNodesReverse();
                 for (InitNode initN : initNode) {
                     if (initN != null) {
                         xmlString += (initN).accept(this) + "\n";
@@ -141,13 +141,13 @@ public class XMLVisitor implements Visitor {
                 if (node instanceof WhileStatNode) {
                     xmlString += "<WhileStatNode>";
                     xmlString += ((WhileStatNode) node).getExprNode().accept(this);
-                    ArrayList<StatNode> statListNode = ((WhileStatNode) node).getStatListNode();
+                    ArrayList<StatNode> statListNode = ((WhileStatNode) node).getStatListNodeReverse();
                     for (StatNode statElem : statListNode) {
                         if (statElem != null) {
                             xmlString += statElem.accept(this) + "\n";
                         }
                     }
-                    ArrayList<VarDeclNode> varDeclListNode = ((WhileStatNode) node).getVarDeclListNode();
+                    ArrayList<VarDeclNode> varDeclListNode = ((WhileStatNode) node).getVarDeclListNodeReverse();
                     for (VarDeclNode varDeclElem : varDeclListNode) {
                         if (varDeclElem != null) {
                             xmlString += varDeclElem.accept(this);
@@ -160,13 +160,13 @@ public class XMLVisitor implements Visitor {
                 if (node instanceof IfStatNode) {
                     xmlString += "<IfStatNode>";
                     xmlString += ((IfStatNode) node).getExprNode().accept(this);
-                    ArrayList<VarDeclNode> varDeclListNode = ((IfStatNode) node).getVarDeclListNode();
+                    ArrayList<VarDeclNode> varDeclListNode = ((IfStatNode) node).getVarDeclListNodeReverse();
                     for (VarDeclNode varDeclElem : varDeclListNode) {
                         if (varDeclElem != null) {
                             xmlString += varDeclElem.accept(this);
                         }
                     }
-                    ArrayList<StatNode> statListNode = ((IfStatNode) node).getStatListNode();
+                    ArrayList<StatNode> statListNode = ((IfStatNode) node).getStatListNodeReverse();
                     for (StatNode statElem : statListNode) {
                         if (statElem != null) {
                             xmlString += statElem.accept(this) + "\n";
@@ -183,13 +183,13 @@ public class XMLVisitor implements Visitor {
 
                 if (node instanceof ElseNode) {
                     xmlString += "<ElseNode>";
-                    ArrayList<StatNode> statListNode = ((ElseNode) node).getStatListNode();
+                    ArrayList<StatNode> statListNode = ((ElseNode) node).getStatListNodeReverse();
                     for (StatNode statElem : statListNode) {
                         if (statElem != null) {
                             xmlString += statElem.accept(this) + "\n";
                         }
                     }
-                    ArrayList<VarDeclNode> varDeclListNode = ((ElseNode) node).getVarDeclListNode();
+                    ArrayList<VarDeclNode> varDeclListNode = ((ElseNode) node).getVarDeclListNodeReverse();
                     for (VarDeclNode varDeclElem : varDeclListNode) {
                         if (varDeclElem != null) {
                             xmlString += varDeclElem.accept(this);
@@ -214,7 +214,7 @@ public class XMLVisitor implements Visitor {
 
                 if (node instanceof ReadStatNode) {
                     xmlString += "<ReadStatNode>";
-                    ArrayList<LeafNode> idListNode = ((ReadStatNode) node).getIdListNode();
+                    ArrayList<LeafNode> idListNode = ((ReadStatNode) node).getIdListNodeReverse();
                     for (LeafNode idElem : idListNode) {
                         if (idElem != null) {
                             xmlString += idElem.accept(this);
@@ -237,7 +237,7 @@ public class XMLVisitor implements Visitor {
                     xmlString += "<CallFunNode>";
 
                     xmlString += ((CallFunNode) node).getLeafNode().accept(this);
-                    ArrayList<ExprNode> exprRefsNode = ((CallFunNode) node).getExprRefsNode();
+                    ArrayList<ExprNode> exprRefsNode = ((CallFunNode) node).getExprRefsNodeReverse();
                     for (ExprNode exprElem : exprRefsNode) {
                         if (exprElem != null) {
                             xmlString += exprElem.accept(this) + "\n";

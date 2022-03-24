@@ -29,8 +29,12 @@ public class IfStatNode extends StatNode{
         this.exprNode = exprNode;
     }
 
-    public ArrayList<VarDeclNode> getVarDeclListNode() {
+    public ArrayList<VarDeclNode> getVarDeclListNodeReverse() {
         Collections.reverse(varDeclListNode);
+        return varDeclListNode;
+    }
+
+    public ArrayList<VarDeclNode> getVarDeclListNode() {
         return varDeclListNode;
     }
 
@@ -38,8 +42,12 @@ public class IfStatNode extends StatNode{
         this.varDeclListNode = varDeclListNode;
     }
 
-    public ArrayList<StatNode> getStatListNode() {
+    public ArrayList<StatNode> getStatListNodeReverse() {
         Collections.reverse(statListNode);
+        return statListNode;
+    }
+
+    public ArrayList<StatNode> getStatListNode() {
         return statListNode;
     }
 

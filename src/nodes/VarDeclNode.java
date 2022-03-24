@@ -24,8 +24,12 @@ public class VarDeclNode extends AbstractSyntaxNode {
         this.nameNode = nameNode;
     }
 
-    public ArrayList<InitNode> getInitNodes() {
+    public ArrayList<InitNode> getInitNodesReverse() {
         Collections.reverse(initNodes);
+        return initNodes;
+    }
+
+    public ArrayList<InitNode> getInitNodes() {
         return initNodes;
     }
 
