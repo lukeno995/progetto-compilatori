@@ -71,6 +71,14 @@ public class CGeneratorVisitor implements Visitor {
                     visit((LeafNode) nodeExpr);
                 } else if (nodeExpr instanceof ConstNode) {
                     visit((ConstNode) nodeExpr);
+                } else if (nodeExpr instanceof RelOpNode) {
+                    visit((RelOpNode) nodeExpr);
+                } else if (nodeExpr instanceof OrAndOpNode) {
+                    visit((OrAndOpNode) nodeExpr);
+                } else if (nodeExpr instanceof NotOpNode) {
+                    visit((NotOpNode) nodeExpr);
+                } else if (nodeExpr instanceof ConcatNode) {
+                    visit((ConcatNode) nodeExpr);
                 }
                 return "";
             }
@@ -119,12 +127,6 @@ public class CGeneratorVisitor implements Visitor {
     //VAR DECL NODE
     public void visit(VarDeclNode node) throws IOException {
         VarDeclNode tmp = node;
-
-        if (tmp.getTypeVar() != null) {
-
-            code += typeC(tmp.getType()) + " ";
-        }
-
 
         ArrayList<InitNode> initNodes = tmp.getInitNodes();
         for (InitNode initNode : initNodes) {
@@ -188,6 +190,9 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(InitNode node) throws IOException {
         InitNode tmp = node;
+        if (tmp.getType() != null) {
+            code += typeC(tmp.getType()) + " ";
+        }
         if (tmp.getLeafNode() != null) {    //if there is a leaf nod
             tmp.getLeafNode().accept(this);
         }
@@ -345,8 +350,8 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(ConstNode node) throws IOException {
         System.out.println("ConstNode");
-        if (node.getValue() != null) {
-            typeConst(node.getNameID(), node.getValue());
+        if (node.getType() != null) {
+            typeConst(node.getType(), node.getValue());
         }
     }
 
@@ -357,11 +362,34 @@ public class CGeneratorVisitor implements Visitor {
         node.getExprNode2().accept(this);
     }
 
+    public void visit(RelOpNode node) throws IOException {
+        System.out.println("RelOpNode");
+        node.getExprNode1().accept(this);
+        code += typeOperation(node.getName());
+        node.getExprNode2().accept(this);
+    }
 
     public void visit(UnOpNode node) throws IOException {
-        System.out.println("UnOpNode");
-        code += node.getName();
+        System.out.println("UnaryOpNode");
+        code += typeOperation(node.getName());
+        node.getExprNode1().accept(this);
     }
+
+    public void visit(OrAndOpNode node) throws IOException {
+        System.out.println("OrAndOpNode");
+        node.getExprNode1().accept(this);
+        code += typeOperation(node.getName());
+        node.getExprNode2().accept(this);
+    }
+
+    public void visit(ConcatNode node) throws IOException {
+        System.out.println("ConcatNode");
+    }
+
+    public void visit(NotOpNode node) throws IOException {
+        System.out.println("NotOpNode");
+    }
+
 
     public void visit(LeafNode node) throws IOException {
         code += node.getNameId();
@@ -426,11 +454,19 @@ public class CGeneratorVisitor implements Visitor {
         return "";
     }
 
-    private void typeConst(String typeConst, Object value) {
+    private void typeConst(int typeConst, Object value) {
         switch (typeConst) {
-            case "INTEGER_CONST", "REAL_CONST" -> code += (String) value;
-            case "STRING_CONST" -> code += value;
+            case Sym.INTEGER:
+            case Sym.REAL:
+            case Sym.STRING:
+            case Sym.BOOL:
+            case Sym.STRING_CONST:
+            case Sym.INTEGER_CONST:
+            case Sym.REAL_CONST:
+                code += value;
+                break;
         }
+
     }
 }
 

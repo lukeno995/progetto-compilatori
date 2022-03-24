@@ -219,6 +219,7 @@ public class SemanticVisitor implements Visitor {
 
         ExprNode exprNode = node.getExprNode();
         exprNode.accept(this);
+
         int typeExpr = exprNode.getType();
 
         int typeNode = TypeChecker.typeCheckBinaryOp(TypeChecker.ASSIGNOP, typeLeaf, typeExpr);
@@ -238,6 +239,19 @@ public class SemanticVisitor implements Visitor {
     }
 
     void visitInitNode(InitNode node) {
+        LeafNode leafNode = node.getLeafNode();
+        leafNode.accept(this);
+        node.setType(leafNode.getType());
+        ExprNode exprNode = node.getExprNode();
+        if (exprNode != null) {
+            exprNode.accept(this);
+        }
+
+        ConstNode constant = node.getConstant();
+        if (constant != null) {
+            constant.accept(this);
+            node.setType(constant.getType());
+        }
 
     }
 
