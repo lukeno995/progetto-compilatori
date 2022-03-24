@@ -224,6 +224,7 @@ public class CGeneratorVisitor implements Visitor {
         WhileStatNode tmp = node;
         code += "while (";
         if (tmp.getExprNode() != null) {
+
             tmp.getExprNode().accept(this);
         }
         code += ") {\n";
@@ -295,12 +296,19 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(ReadStatNode node) throws IOException {
         ArrayList<LeafNode> idListNode = node.getIdListNode();
-        code += "\nscanf(\"";
-        if (node.getExprNode() != null) {
-            node.getExprNode().accept(this);
-        } else {
-            code += "";
+        String concatPrintf ="printf(\"";
+        if(node.getExprNode() instanceof ConstNode){
+            concatPrintf +=((ConstNode) node.getExprNode()).getValue();
+            concatPrintf+="\"";
+
+        }else if(node.getExprNode() instanceof LeafNode){
+            LeafNode leafNode = ((LeafNode) node.getExprNode());
+            concatPrintf+=formatSpecifier(leafNode.getType());
+            concatPrintf+="\", &"+leafNode.getNameId();
         }
+        concatPrintf+=");\n";
+        code += concatPrintf;
+        code += "\nscanf(\"";
         ArrayList<LeafNode> idList = node.getIdListNode();
         for (LeafNode id : idListNode) {
             code += formatSpecifier(id.getType());
@@ -317,10 +325,19 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(WriteStatNode node) throws IOException {
+        String concatPrintf ="printf(\"";
         System.out.println("WriteStatNode");
-        code += "printf(\"";
-        node.getExprNode().accept(this);
-        code += "\\n\"); \n";
+        if(node.getExprNode() instanceof ConstNode){
+            concatPrintf +=((ConstNode) node.getExprNode()).getValue();
+            concatPrintf+="\"";
+
+        }else if(node.getExprNode() instanceof LeafNode){
+            LeafNode leafNode = ((LeafNode) node.getExprNode());
+            concatPrintf+=formatSpecifier(leafNode.getType());
+            concatPrintf+="\", &"+leafNode.getNameId();
+        }
+        concatPrintf+=");\n";
+        code += concatPrintf;
     }
 
     public void visit(ReturnNode node) throws IOException {
@@ -364,9 +381,16 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(RelOpNode node) throws IOException {
         System.out.println("RelOpNode");
-        node.getExprNode1().accept(this);
-        code += typeOperation(node.getName());
-        node.getExprNode2().accept(this);
+        if(node.getExprNode1().getType() == Sym.STRING){
+            code+="strcmp(";
+            node.getExprNode1().accept(this);
+            code+=",";
+            node.getExprNode2().accept(this);
+        }else {
+            node.getExprNode1().accept(this);
+            code += typeOperation(node.getName());
+            node.getExprNode2().accept(this);
+        }
     }
 
     public void visit(UnOpNode node) throws IOException {
@@ -458,13 +482,15 @@ public class CGeneratorVisitor implements Visitor {
         switch (typeConst) {
             case Sym.INTEGER:
             case Sym.REAL:
-            case Sym.STRING:
+
             case Sym.BOOL:
-            case Sym.STRING_CONST:
             case Sym.INTEGER_CONST:
             case Sym.REAL_CONST:
                 code += value;
                 break;
+            case Sym.STRING:
+            case Sym.STRING_CONST:
+                code+="\""+value+"\"";
         }
 
     }
