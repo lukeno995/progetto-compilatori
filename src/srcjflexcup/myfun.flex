@@ -84,8 +84,8 @@ number = ((\+|-)?({digit}+)(\.{digit}+)?)
 "or"				{return symbol(Sym.OR);}
 "not"				{return symbol(Sym.NOT);}
 //"null"      		{return symbol(symbol.Sym.NULL);}
-"true"      		{return symbol(Sym.TRUE);}
-"false"         	{return symbol(Sym.FALSE);}
+"true"      		{return symbol(Sym.TRUE, yytext());}
+"false"         	{return symbol(Sym.FALSE, yytext());}
 {integer} 	        {return symbol(Sym.INTEGER_CONST, yytext());}
 {number}		    {return symbol(Sym.REAL_CONST, yytext());}
 \"                  {string.setLength(0); yybegin(STRING);}

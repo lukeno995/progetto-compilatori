@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class CGeneratorVisitor implements Visitor {
-
+    private int indexString = 0;
     private final Writer writer;
     private String code = "";
 
@@ -65,7 +65,10 @@ public class CGeneratorVisitor implements Visitor {
                 }
                 if (nodeExpr instanceof BinOpNode) {
                     visit((BinOpNode) nodeExpr);
-                } else if (nodeExpr instanceof UnOpNode) {
+                }else if (nodeExpr instanceof ConcatNode) {
+                    visit((ConcatNode) nodeExpr);
+                }
+                else if (nodeExpr instanceof UnOpNode) {
                     visit((UnOpNode) nodeExpr);
                 } else if (nodeExpr instanceof LeafNode) {
                     visit((LeafNode) nodeExpr);
@@ -138,6 +141,7 @@ public class CGeneratorVisitor implements Visitor {
 
     //FUN NODE
     public void visit(FunNode node) throws IOException {
+
         if (node instanceof FunNode) {
             FunNode tmp = node;
             if (tmp.getTypeVar() != null) {
@@ -175,6 +179,8 @@ public class CGeneratorVisitor implements Visitor {
             }); //visit each statement
             code += "}\n";
         }
+        indexString = code.length();
+
     }
 
     //PARAM DECL NODE
@@ -408,6 +414,59 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(ConcatNode node) throws IOException {
         System.out.println("ConcatNode");
+        String concatFunction ="";
+        if(node.getExprNode2().getType() == Sym.STRING){
+            concatFunction+=  "char* concatStringToString(char *s1, char* i) {\n" +
+                    "    char* s = malloc(256);\n" +
+                    "    sprintf(s, \"%s%s\", s1, i);\n" +
+                    "    return s;\n" +
+                    "}\n\n";
+
+        String firstPart = code.substring(0,indexString);
+        String lastPart = code.substring(indexString,code.length());
+        String newSubstring = firstPart + concatFunction + lastPart;
+        newSubstring+="concatStringToString(";
+        code= newSubstring;
+        node.getExprNode1().accept(this);
+        code+= ",";
+        node.getExprNode2().accept(this);
+        code+=")";
+        }
+        else if(node.getExprNode2().getType() == Sym.REAL){
+            concatFunction+=  "char* concatRealToString(char *s1, float i) {\n" +
+                    "    char* s = malloc(256);\n" +
+                    "    sprintf(s, \"%s%.2f\", s1, i);\n" +
+                    "    return s;\n" +
+                    "}\n\n";
+
+            String firstPart = code.substring(0,indexString);
+            String lastPart = code.substring(indexString,code.length());
+            String newSubstring = firstPart + concatFunction + lastPart;
+            newSubstring+="concatRealToString(";
+            code= newSubstring;
+            node.getExprNode1().accept(this);
+            code+= ",";
+            node.getExprNode2().accept(this);
+            code+=")";
+        }
+        else if(node.getExprNode2().getType() == Sym.INTEGER){
+            concatFunction+=  "char* concatIntegerToString(char *s1, int i) {\n" +
+                    "    char* s = malloc(256);\n" +
+                    "    sprintf(s, \"%s%d\", s1, i);\n" +
+                    "    return s;\n" +
+                    "}\n\n";
+
+            String firstPart = code.substring(0,indexString);
+            String lastPart = code.substring(indexString,code.length());
+            String newSubstring = firstPart + concatFunction + lastPart;
+            newSubstring+="concatIntegerToString(";
+            code= newSubstring;
+            node.getExprNode1().accept(this);
+            code+= ",";
+            node.getExprNode2().accept(this);
+            code+=")";
+        }
+
     }
 
     public void visit(NotOpNode node) throws IOException {
@@ -427,6 +486,8 @@ public class CGeneratorVisitor implements Visitor {
                 return "float";
             case Sym.STRING:
                 return "char*";
+            case Sym.BOOL:
+                return "bool";
         }
         return "";
     }
