@@ -307,14 +307,13 @@ public class CGeneratorVisitor implements Visitor {
         String concatPrintf ="printf(\"";
         if(node.getExprNode() instanceof ConstNode){
             concatPrintf +=((ConstNode) node.getExprNode()).getValue();
-            concatPrintf+="\"";
 
         }else if(node.getExprNode() instanceof LeafNode){
             LeafNode leafNode = ((LeafNode) node.getExprNode());
             concatPrintf+=formatSpecifier(leafNode.getType());
             concatPrintf+="\", &"+leafNode.getNameId();
         }
-        concatPrintf+=");\n";
+        concatPrintf += "\");\n";
         code += concatPrintf;
         code += "\nscanf(\"";
         ArrayList<LeafNode> idList = node.getIdListNode();
@@ -324,9 +323,18 @@ public class CGeneratorVisitor implements Visitor {
         code += "\", ";
         for (int i = 0; i < idList.size(); i++) {
             if (i <= idList.size() - 1) {
-                code += "&" + idList.get(i).getNameId();
+                if (idList.get(i).getType() == Sym.STRING) {
+                    code += idList.get(i).getNameId();
+                } else {
+                    code += "&" + idList.get(i).getNameId();
+                }
             } else {
-                code += "&" + idList.get(i).getNameId() + ", ";
+
+                if (idList.get(i).getType() == Sym.STRING) {
+                    code += idList.get(i).getNameId() + ", ";
+                } else {
+                    code += "&" + idList.get(i).getNameId() + ", ";
+                }
             }
             code = code + ");\n";
         }
@@ -336,13 +344,15 @@ public class CGeneratorVisitor implements Visitor {
         String concatPrintf ="printf(\"";
         System.out.println("WriteStatNode");
         if(node.getExprNode() instanceof ConstNode){
-            concatPrintf +=((ConstNode) node.getExprNode()).getValue();
-            concatPrintf+="\"";
+            concatPrintf += ((ConstNode) node.getExprNode()).getValue();
+            concatPrintf += "\\n";
+            concatPrintf += "\"";
+
 
         }else if(node.getExprNode() instanceof LeafNode){
             LeafNode leafNode = ((LeafNode) node.getExprNode());
-            concatPrintf+=formatSpecifier(leafNode.getType());
-            concatPrintf+="\", &"+leafNode.getNameId();
+            concatPrintf += formatSpecifier(leafNode.getType());
+            concatPrintf += "\", " + leafNode.getNameId();
         }
         concatPrintf+=");\n";
         code += concatPrintf;
@@ -394,11 +404,13 @@ public class CGeneratorVisitor implements Visitor {
             node.getExprNode1().accept(this);
             code+=",";
             node.getExprNode2().accept(this);
+            code += ")";
         }else {
             node.getExprNode1().accept(this);
             code += typeOperation(node.getName());
             node.getExprNode2().accept(this);
         }
+
     }
 
     public void visit(UnOpNode node) throws IOException {
@@ -424,9 +436,9 @@ public class CGeneratorVisitor implements Visitor {
                     "    return s;\n" +
                     "}\n\n";
 
-        String firstPart = code.substring(0,indexString);
-        String lastPart = code.substring(indexString,code.length());
-        String newSubstring = firstPart + concatFunction + lastPart;
+            String firstPart = code.substring(0, indexString);
+            String lastPart = code.substring(indexString);
+            String newSubstring = firstPart + concatFunction + lastPart;
         newSubstring+="concatStringToString(";
         code= newSubstring;
         node.getExprNode1().accept(this);
@@ -441,8 +453,8 @@ public class CGeneratorVisitor implements Visitor {
                     "    return s;\n" +
                     "}\n\n";
 
-            String firstPart = code.substring(0,indexString);
-            String lastPart = code.substring(indexString,code.length());
+            String firstPart = code.substring(0, indexString);
+            String lastPart = code.substring(indexString);
             String newSubstring = firstPart + concatFunction + lastPart;
             newSubstring+="concatRealToString(";
             code= newSubstring;
@@ -458,8 +470,8 @@ public class CGeneratorVisitor implements Visitor {
                     "    return s;\n" +
                     "}\n\n";
 
-            String firstPart = code.substring(0,indexString);
-            String lastPart = code.substring(indexString,code.length());
+            String firstPart = code.substring(0, indexString);
+            String lastPart = code.substring(indexString);
             String newSubstring = firstPart + concatFunction + lastPart;
             newSubstring+="concatIntegerToString(";
             code= newSubstring;

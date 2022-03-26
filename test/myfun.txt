@@ -57,22 +57,14 @@ main
     real a := 0.0;
     real b := 0.0;
     real result;
-    var op :=
-    '1. addizione
-     2. moltiplicazione
-     3. divisione
-     4. sottrazione
-     5. esci';
     var ans := 'si';
     integer operator := 0;
 
 
     while ans = 'si' loop
         ans := '';
-        ?. op;
+        ?. '1. addizione 2. moltiplicazione 3. divisione 4. sottrazione  5. esci';
         % operator 'Seleziona loperazione con un intero:';
-        ?. 'Operatore selezionato:';
-        ?. operator;
 
         % a 'inserisci primo operando con un reale:';
         % b 'inserisci secondo operando con un reale:';
