@@ -15,6 +15,7 @@ public class TypeChecker {
     public static final String BOOLEANOP = "BOOLEANOP";
     public static final String CONDITIONAL = "CONDITIONAL";
     public static final String STRINGCONCAT = "CONCAT";
+    public static final String POW = "POW";
 
 
     public static int typeCheckUnaryOp(String op, int type) throws TypeMismatchException, FatalError {
@@ -47,9 +48,20 @@ public class TypeChecker {
 
         } else if (op.equals(STRINGCONCAT)) {
             return typeCheckStringConcat(type1, type2);
-        } else {
+        }
+        else if (op.equals(POW)) {
+            return typeCheckPow(type1, type2);
+        }
+        else {
             throw new TypeMismatchException("Operazione " + op + " non verificabile nel checker binario");
         }
+    }
+
+    private static int typeCheckPow(int type1, int type2) throws TypeMismatchException {
+        if (type1 == Sym.INTEGER && type2 == Sym.INTEGER) {
+            return Sym.INTEGER;
+        }
+        throw new TypeMismatchException("Operazioni di potenza eseguibili solo tra espressioni di tipo int. Valori forniti: " + type1 + " - " + type2);
     }
 
     private static int typeCheckConditionalOp(int type) throws TypeMismatchException {

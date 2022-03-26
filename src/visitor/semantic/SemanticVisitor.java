@@ -62,6 +62,12 @@ public class SemanticVisitor implements Visitor {
             } catch (TypeMismatchException e) {
                 e.printStackTrace();
             }
+        } else if (ast instanceof PowOpNode) {
+            try {
+                visitPowOpNode((PowOpNode) ast);
+            } catch (TypeMismatchException | FatalError e) {
+                e.printStackTrace();
+            }
         } else if (ast instanceof ConcatNode) {
             try {
                 visitConcatNode((ConcatNode) ast);
@@ -152,6 +158,15 @@ public class SemanticVisitor implements Visitor {
         ExprNode left = ast.getExprNode1();
         left.accept(this);
         int resultType = TypeChecker.typeCheckUnaryOp(TypeChecker.NOTOP, left.getType());
+        ast.setType(resultType);
+    }
+
+    void visitPowOpNode(PowOpNode ast) throws TypeMismatchException, FatalError {
+        ExprNode left = ast.getExprNode1();
+        left.accept(this);
+        ExprNode right = ast.getExprNode2();
+        right.accept(this);
+        int resultType = TypeChecker.typeCheckBinaryOp(TypeChecker.POW, left.getType(), right.getType());
         ast.setType(resultType);
     }
 

@@ -80,6 +80,8 @@ public class CGeneratorVisitor implements Visitor {
                     visit((OrAndOpNode) nodeExpr);
                 } else if (nodeExpr instanceof NotOpNode) {
                     visit((NotOpNode) nodeExpr);
+                } else if (nodeExpr instanceof PowOpNode) {
+                    visit((PowOpNode) nodeExpr);
                 } else if (nodeExpr instanceof ConcatNode) {
                     visit((ConcatNode) nodeExpr);
                 }
@@ -473,6 +475,15 @@ public class CGeneratorVisitor implements Visitor {
         System.out.println("NotOpNode");
         code = code +"!";
         node.getExprNode1().accept(this);
+    }
+
+    public void visit(PowOpNode node) throws IOException {
+        System.out.println("PowOpNode");
+        code = code + "pow(";
+        node.getExprNode1().accept(this);
+        code = code + " , ";
+        node.getExprNode2().accept(this);
+        code = code + ")";
     }
 
 
