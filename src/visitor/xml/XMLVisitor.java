@@ -282,6 +282,21 @@ public class XMLVisitor implements Visitor {
                 xmlString += "</ConcatNode> ";
             }
 
+            if (node instanceof NotOpNode) {
+                xmlString += "<NotOpNode> ";
+                xmlString += ((NotOpNode) node).getExprNode1().accept(this);
+                xmlString += ((NotOpNode) node).getName();
+                xmlString += "</NotOpNode> ";
+            }
+
+            if (node instanceof PowOpNode) {
+                xmlString += "<PowOpNode> ";
+                xmlString += ((PowOpNode) node).getExprNode1().accept(this);
+                xmlString += ((PowOpNode) node).getName();
+                xmlString += ((PowOpNode) node).getExprNode2().accept(this);
+                xmlString += "</PowOpNode> ";
+            }
+
 
             if (node instanceof OrAndOpNode) {
                 xmlString += "<OrAndOpNode> ";
@@ -297,9 +312,11 @@ public class XMLVisitor implements Visitor {
                 xmlString += ((UnOpNode) node).getName();
                 xmlString += "</UnOpNode> ";
             }
+
             if (node instanceof LeafNode) {
                 xmlString += "(" + ((LeafNode) node).getName() + "," + ((LeafNode) node).getNameId() + ") \n";
             }
+
             return xmlString;
         }
         return xmlString;
