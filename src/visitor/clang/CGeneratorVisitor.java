@@ -471,6 +471,8 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(NotOpNode node) throws IOException {
         System.out.println("NotOpNode");
+        code = code +"!";
+        node.getExprNode1().accept(this);
     }
 
 
