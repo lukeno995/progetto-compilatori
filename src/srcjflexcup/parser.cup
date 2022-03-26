@@ -156,7 +156,7 @@ Expr ::= INTEGER_CONST:iconst {: RESULT = new  ConstNode("INTEGER", iconst); :}
 	| Expr:exprNode1  DIV  Expr:exprNode2 {: RESULT = new BinOpNode("DIV", exprNode1, exprNode2); :}
 	| Expr:exprNode1  DIVINT  Expr:exprNode2 {: RESULT = new BinOpNode("DIVINT", exprNode1, exprNode2); :}
 	| Expr:exprNode1  AND  Expr:exprNode2 {: RESULT = new OrAndOpNode("AND", exprNode1, exprNode2); :}
-	| Expr:exprNode1  POW  Expr:exprNode2  {: RESULT = new BinOpNode("POW", exprNode1, exprNode2); :}
+	| Expr:exprNode1  POW  Expr:exprNode2  {: RESULT = new PowOpNode("POW", exprNode1, exprNode2); :}
 	| Expr:exprNode1  STR_CONCAT  Expr:exprNode2 {: RESULT = new ConcatNode("STR_CONCAT", exprNode1, exprNode2); :}
 	| Expr:exprNode1  OR  Expr:exprNode2 {: RESULT = new OrAndOpNode("OR", exprNode1, exprNode2); :}
 	| Expr:exprNode1  GT  Expr:exprNode2 {: RESULT = new RelOpNode("GT", exprNode1, exprNode2); :}
