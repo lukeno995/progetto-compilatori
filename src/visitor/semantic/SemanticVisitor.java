@@ -98,6 +98,12 @@ public class SemanticVisitor implements Visitor {
             } catch (UndeclaredVariableException e) {
                 e.printStackTrace();
             }
+        }else if (ast instanceof OutParNode) {
+            try {
+                visitOutParNode((OutParNode) ast);
+            }  catch (FatalError e) {
+                e.printStackTrace();
+            }
         } else if (ast instanceof ConstNode) {
             visitConstNode((ConstNode) ast);
         } else if (ast instanceof WhileStatNode) {
@@ -120,6 +126,12 @@ public class SemanticVisitor implements Visitor {
             }
         }
         return null;
+    }
+
+    private void visitOutParNode(OutParNode ast) throws  FatalError {
+        LeafNode nodeLeaf = ast.getLeafNode();
+        nodeLeaf.accept(this);
+        ast.setType(nodeLeaf.getType());
     }
 
     void visitConstNode(ConstNode ast) {

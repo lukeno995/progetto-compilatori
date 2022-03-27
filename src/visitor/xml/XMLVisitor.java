@@ -298,6 +298,14 @@ public class XMLVisitor implements Visitor {
             }
 
 
+            //OutParNode
+            if (node instanceof OutParNode) {
+                xmlString += "<OutParNode> ";
+                xmlString += ((OutParNode) node).getLeafNode().accept(this);
+                xmlString += "</OutParNode> ";
+            }
+            //OutParNode
+
             if (node instanceof OrAndOpNode) {
                 xmlString += "<OrAndOpNode> ";
                 xmlString += ((OrAndOpNode) node).getExprNode1().accept(this);

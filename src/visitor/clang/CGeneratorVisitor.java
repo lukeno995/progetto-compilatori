@@ -82,6 +82,8 @@ public class CGeneratorVisitor implements Visitor {
                     visit((NotOpNode) nodeExpr);
                 } else if (nodeExpr instanceof PowOpNode) {
                     visit((PowOpNode) nodeExpr);
+                } else if (nodeExpr instanceof OutParNode) {
+                    visit((OutParNode) nodeExpr);
                 } else if (nodeExpr instanceof ConcatNode) {
                     visit((ConcatNode) nodeExpr);
                 }
@@ -191,10 +193,15 @@ public class CGeneratorVisitor implements Visitor {
         if (tmp.getTypeParam() != null) {
             code += typeC(tmp.getType()) + " ";
         }
+        if(node.getMode() == "OUT"){
+            code+="*";
+        }
         if (tmp.getLeafNode() != null) {
             tmp.getLeafNode().accept(this);
         }
     }
+
+
 
     public void visit(InitNode node) throws IOException {
         InitNode tmp = node;
@@ -213,6 +220,16 @@ public class CGeneratorVisitor implements Visitor {
         }
         code += ";\n";
     }
+
+    //OUTPAR
+    public void visit(OutParNode node) throws IOException {
+        OutParNode tmp = node;
+        if (tmp.getLeafNode() != null) {    //if there is a leaf nod
+            tmp.getLeafNode().accept(this);
+        }
+    }
+    //OUTPAR
+
 
 
     //MAIN NODE
