@@ -207,6 +207,9 @@ public class CGeneratorVisitor implements Visitor {
         if (tmp.getExprNode() != null) {
             code += " = ";
             tmp.getExprNode().accept(this);
+        } else if (tmp.getConstant() != null) {
+            code += " = ";
+            tmp.getConstant().accept(this);
         }
         code += ";\n";
     }
@@ -372,10 +375,22 @@ public class CGeneratorVisitor implements Visitor {
         ArrayList<ExprNode> exprListNode = node.getExprRefsNode();
         for (int i = 0; i < exprListNode.size(); i++) {
             if (i == exprListNode.size() - 1) {
-                exprListNode.get(i).accept(this);
+                if (exprListNode.get(i) instanceof OutParNode) {
+                    code += "&";
+                    exprListNode.get(i).accept(this);
+                } else {
+                    exprListNode.get(i).accept(this);
+                }
+
             } else {
-                exprListNode.get(i).accept(this);
-                code += ", ";
+                if (exprListNode.get(i) instanceof OutParNode) {
+                    code += "&";
+                    exprListNode.get(i).accept(this);
+                    code += ", ";
+                } else {
+                    exprListNode.get(i).accept(this);
+                    code += ", ";
+                }
             }
 
         }
@@ -399,13 +414,18 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(RelOpNode node) throws IOException {
         System.out.println("RelOpNode");
-        if(node.getExprNode1().getType() == Sym.STRING){
-            code+="strcmp(";
+        if (node.getExprNode1().getType() == Sym.STRING) {
+            code += "strcmp(";
             node.getExprNode1().accept(this);
-            code+=",";
+            code += ",";
             node.getExprNode2().accept(this);
             code += ")";
-        }else {
+            if (node.getName().equalsIgnoreCase("EQ")) {
+                code += " == 0";
+            } else {
+                code += " != 0";
+            }
+        } else {
             node.getExprNode1().accept(this);
             code += typeOperation(node.getName());
             node.getExprNode2().accept(this);
