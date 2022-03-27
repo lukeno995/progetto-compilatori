@@ -22,7 +22,7 @@ digit = [0-9]
 digitWithNoZero = [1-9]
 id = {letter}({letter} | {digit})*
 
-Comment = {TraditionalComment} | {EndOfLineComment}
+comment = {TraditionalComment} | {EndOfLineComment}
 TraditionalComment = "#*" [^*] ~"#"
 EndOfLineComment = "//" {InputCharacter}* {LineTerminator}? | "#" {InputCharacter}* {LineTerminator}?
 integer = 0 | {digitWithNoZero}{digit}*
@@ -124,6 +124,7 @@ number = ((\+|-)?({digit}+)(\.{digit}+)?)
 <<EOF>> {return new Symbol(Sym.error, "STRINGA COSTANTE NON COMPLETATA: "+ string.toString()); }
 }
 
+{comment} {/* ignore */}
 {WhiteSpace} { /* ignore */ }
 [^]           { throw new Error("\n\nIllegal character < "+ yytext()+" >\n"); }
 // End of file
