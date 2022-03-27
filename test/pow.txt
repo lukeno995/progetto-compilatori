@@ -1,3 +1,4 @@
+#* Funzione di potenza #
 fun powFun (integer x, integer y): integer
     integer temp;
     temp := x^y;
