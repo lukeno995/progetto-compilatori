@@ -1,7 +1,5 @@
 package nodes;
 
-import util.RecordTable;
-import util.SymbolTable;
 import visitor.xml.AbstractSyntaxNode;
 
 public class ExprNode extends AbstractSyntaxNode {
