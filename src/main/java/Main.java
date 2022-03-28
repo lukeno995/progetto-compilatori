@@ -18,7 +18,7 @@ public class Main {
         }
         parser p = new parser(new Lexer(new FileReader(new File(inPathFile))));
 
-        ProgramNode programOp = (ProgramNode) p.parse().value;
+        ProgramNode programOp = (ProgramNode) p.debug_parse().value;
 //
         XMLVisitor xmlVisitor = new XMLVisitor();
         System.out.println(programOp.accept(xmlVisitor));

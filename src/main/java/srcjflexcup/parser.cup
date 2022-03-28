@@ -49,10 +49,12 @@ non terminal CallFunNode CallFun;
 non terminal ArrayList<LeafNode> IdList;
 
 precedence left LPAR,RPAR;
-precedence right POW;
-precedence left TIMES,DIV,DIVINT;
-precedence left PLUS, MINUS;
 precedence left STR_CONCAT;
+precedence right POW;
+
+precedence left TIMES,DIV,DIVINT;
+
+precedence left PLUS, MINUS;
 precedence left AND,OR;
 precedence left EQ, NE, LT, LE, GT, GE;
 precedence right NOT;

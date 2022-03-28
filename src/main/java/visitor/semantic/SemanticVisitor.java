@@ -226,9 +226,13 @@ public class SemanticVisitor implements Visitor {
     }
 
     void visitWriteStatNode(WriteStatNode ast) {
+        int type = Sym.VOID;
         ExprNode exprNode = ast.getExprNode();
-        exprNode.accept(this);
-        ast.setType(exprNode.getType());
+        if (exprNode != null) {
+            exprNode.accept(this);
+            type = exprNode.getType();
+        }
+        ast.setType(type);
     }
 
     void visitReadStatNode(ReadStatNode ast) {
@@ -239,11 +243,12 @@ public class SemanticVisitor implements Visitor {
     }
 
     void visitAssignStatNode(AssignStatNode node) throws TypeMismatchException, UndeclaredVariableException {
-
+        int typeLeaf = Sym.VOID;
         LeafNode leafNode = node.getLeafNode();
-        leafNode.accept(this);
-        int typeLeaf = leafNode.getType();
-
+        if (node.getLeafNode() != null) {
+            leafNode.accept(this);
+            typeLeaf = leafNode.getType();
+        }
         ExprNode exprNode = node.getExprNode();
         exprNode.accept(this);
 
@@ -336,9 +341,11 @@ public class SemanticVisitor implements Visitor {
         }
         stackScope.push(node.getSymbolTable());
         ArrayList<ParamDeclNode> paramDeclListNode = node.getParamDeclListNodes();
-        for (ParamDeclNode paramDeclNode : paramDeclListNode) {
-            if (paramDeclNode != null) {
-                paramDeclNode.accept(this);
+        if (paramDeclListNode != null) {
+            for (ParamDeclNode paramDeclNode : paramDeclListNode) {
+                if (paramDeclNode != null) {
+                    paramDeclNode.accept(this);
+                }
             }
         }
         ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
@@ -411,8 +418,10 @@ public class SemanticVisitor implements Visitor {
     void visitIfStatNode(IfStatNode node) throws TypeMismatchException, FatalError {
         stackScope.push(node.getSymbolTable());
         ExprNode exprNode = node.getExprNode();
-        exprNode.accept(this);
-        TypeChecker.typeCheckUnaryOp(TypeChecker.CONDITIONAL, exprNode.getType());
+        if (exprNode != null) {
+            exprNode.accept(this);
+            TypeChecker.typeCheckUnaryOp(TypeChecker.CONDITIONAL, exprNode.getType());
+        }
 
         ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
         for (VarDeclNode varDeclNode : varDeclListNode) {

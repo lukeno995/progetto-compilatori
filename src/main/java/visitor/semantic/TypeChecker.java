@@ -60,6 +60,8 @@ public class TypeChecker {
     private static int typeCheckPow(int type1, int type2) throws TypeMismatchException {
         if (type1 == Sym.INTEGER && type2 == Sym.INTEGER) {
             return Sym.INTEGER;
+        } else if (type1 == Sym.REAL && type2 == Sym.REAL) {
+            return Sym.REAL;
         }
         throw new TypeMismatchException("Operazioni di potenza eseguibili solo tra espressioni di tipo int. Valori forniti: " + type1 + " - " + type2);
     }
@@ -118,6 +120,8 @@ public class TypeChecker {
         } else if (type1 == Sym.STRING && type2 == Sym.STRING) {
             return Sym.BOOL;
         } else if (type1 == Sym.BOOL && type2 == Sym.BOOL) {
+            return Sym.BOOL;
+        } else if (type1 == Sym.INTEGER && type2 == Sym.BOOL) {
             return Sym.BOOL;
         } else {
             throw new TypeMismatchException("Non possiamo relazionare " + type2 + " e " + type1);

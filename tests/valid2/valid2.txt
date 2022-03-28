@@ -1,6 +1,6 @@
 fun print_menu(): integer
     integer choose;
-    ?. "Scegli l'operazione da svolgere per continuare";
+    ?. 'Seleziona una di queste operazioni da svolgere per continuare';
     ?. '(1) Somma di due numeri';
     ?. '(2) Moltiplicazione di due numeri';
     ?. '(3) Divisione intera fra due numeri positivi';
@@ -14,7 +14,7 @@ end fun;
 
 fun do_sum()
     real op1, op2;
-    ?. '\n(1) SOMMA\n';
+    ?. '(1) SOMMA';
     % op1 'Inserisci il primo operando: ';
     % op2 'Inserisci il secondo operando: ';
     ?. '';
@@ -23,8 +23,8 @@ end fun;
 
 fun do_mul()
     real op1, op2;
-    ?. '\n(2) MOLTIPLICAZIONE';
-    % op1 '\nInserisci il primo operando: ';
+    ?. '(2) MOLTIPLICAZIONE';
+    % op1 'Inserisci il primo operando: ';
     % op2 'Inserisci il secondo operando: ';
     ?. '';
     ?. 'La moltiplicazione tra ' & op1 & ' e ' & op2 & ' vale ' & op1 * op2;
@@ -32,8 +32,8 @@ end fun;
 
 fun do_div_int()
     integer op1, op2;
-    ?. '\n(3) DIVISIONE INTERA';
-    % op1 '\nInserisci il primo operando: ';
+    ?. '(3) DIVISIONE INTERA';
+    % op1 'Inserisci il primo operando: ';
     % op2 'Inserisci il secondo operando: ';
     ?. '';
     ?. 'La divisione intera tra ' & op1 & ' e ' & op2 & ' vale ' & op1 div op2;
@@ -41,9 +41,9 @@ end fun;
 
 fun do_pow()
     real op1, op2;
-    ?. '\n(4) POTENZA';
-    % op1 '\nInserisci la base: ';
-    % op2 "Inserisci l'esponente: ";
+    ?. '(4) POTENZA';
+    % op1 'Inserisci la base: ';
+    % op2 'Inserisci lesponente:';
     ?. '';
     ?. 'La potenza di ' & op1 & ' elevato a ' & op2 & ' vale ' & op1 ^ op2;
 end fun;
@@ -81,8 +81,8 @@ end fun;
 fun do_fib(bool recursive)
     integer n;
     string message;
-    ?. '\n(5) FIBONACCI';
-    % n '\nInserisci n: ';
+    ?. '(5) FIBONACCI';
+    % n 'Inserisci n: ';
     ?. '';
     message := 'Il numero di Fibonacci in posizione ' & n & ' vale ';
     if recursive then
@@ -95,12 +95,17 @@ end fun;
 
 fun do_operation(integer choose)
     if choose = 1 then do_sum();
-    else if choose = 2 then do_mul();
-    else if choose = 3 then do_div_int();
-    else if choose = 4 then do_pow();
-    else if choose = 5 then do_fib(true);
-    else if choose = 6 then do_fib(false);
-    end if;end if;end if;end if;end if;end if;
+    end if;
+     if choose = 2 then do_mul();
+    end if;
+     if choose = 3 then do_div_int();
+    end if;
+     if choose = 4 then do_pow();
+    end if;
+     if choose = 5 then do_fib(true);
+         end if;
+     if choose = 6 then do_fib(false);
+    end if;
 end fun;
 
 fun print_continua(out bool continua)
@@ -114,7 +119,8 @@ fun print_continua(out bool continua)
 end fun;
 
 main
-    var choose := 0, continua := true;
+    var choose := 0,
+    continua := true;
 
     while continua loop
         choose := print_menu();

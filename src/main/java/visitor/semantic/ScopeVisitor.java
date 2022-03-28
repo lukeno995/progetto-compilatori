@@ -124,9 +124,11 @@ public class ScopeVisitor implements Visitor {
             stackScope.add(symbolTable);
 
             ArrayList<ParamDeclNode> paramDeclListNode = node.getParamDeclListNodes();
-            for (ParamDeclNode paramDeclNode : paramDeclListNode) {
-                if (paramDeclNode != null) {
-                    paramDeclNode.accept(this);
+            if (paramDeclListNode != null) {
+                for (ParamDeclNode paramDeclNode : paramDeclListNode) {
+                    if (paramDeclNode != null) {
+                        paramDeclNode.accept(this);
+                    }
                 }
             }
 

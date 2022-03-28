@@ -7,7 +7,9 @@ import nodes.*;
 import symbol.Sym;
 
 import java.util.ArrayList;
-
+/**
+ * CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
+ */
 @SuppressWarnings({"rawtypes"})
 public class parser extends java_cup.runtime.lr_parser {
 
@@ -94,16 +96,16 @@ public class parser extends java_cup.runtime.lr_parser {
     "\040\uffed\001\002\000\006\037\uffef\040\uffef\001\002\000" +
     "\014\027\024\030\027\031\023\032\025\033\026\001\002" +
     "\000\006\037\ufff0\040\ufff0\001\002\000\034\022\ufffe\024" +
-    "\ufffe\025\ufffe\042\ufffe\050\ufffe\052\ufffe\053\ufffe\054\ufffe" +
-    "\055\ufffe\056\ufffe\057\ufffe\063\ufffe\064\ufffe\001\002\000" +
-    "\006\050\035\052\ufffc\001\002\000\004\064\221\001\002" +
-    "\000\004\052\037\001\002\000\040\022\uffff\025\uffff\042" +
-    "\uffff\043\006\044\014\045\012\046\010\047\013\053\uffff" +
-    "\054\uffff\055\uffff\056\uffff\057\uffff\063\uffff\064\uffff\001" +
-    "\002\000\004\002\001\001\002\000\026\022\051\025\043" +
-    "\042\uffe1\053\042\054\055\055\046\056\044\057\062\063" +
-    "\061\064\054\001\002\000\004\064\214\001\002\000\024" +
-    "\006\063\027\073\030\064\031\066\032\067\033\072\034" +
+            "\ufffe\025\ufffe\042\ufffe\050\ufffe\052\ufffe\053\ufffe\054\ufffe" +
+            "\055\ufffe\056\ufffe\057\ufffe\063\ufffe\064\ufffe\001\002\000" +
+            "\006\050\035\052\ufffc\001\002\000\004\064\221\001\002" +
+            "\000\004\052\037\001\002\000\040\022\uffff\025\uffff\042" +
+            "\uffff\043\006\044\014\045\012\046\010\047\013\053\uffff" +
+            "\054\uffff\055\uffff\056\uffff\057\uffff\063\uffff\064\uffff\001" +
+            "\002\000\004\002\001\001\002\000\026\022\051\025\043" +
+            "\042\uffe1\053\042\054\055\055\046\056\044\057\062\063" +
+            "\061\064\054\001\002\000\004\064\214\001\002\000\024" +
+            "\006\063\027\073\030\064\031\066\032\067\033\072\034" +
             "\075\035\070\064\074\001\002\000\024\006\063\027\073" +
             "\030\064\031\066\032\067\033\072\034\075\035\070\064" +
             "\074\001\002\000\004\037\204\001\002\000\024\006\063" +
@@ -182,7 +184,7 @@ public class parser extends java_cup.runtime.lr_parser {
             "\064\074\001\002\000\024\006\063\027\073\030\064\031" +
             "\066\032\067\033\072\034\075\035\070\064\074\001\002" +
             "\000\052\005\103\006\100\007\uffba\010\107\011\102\012" +
-            "\113\013\105\014\104\015\111\016\uffba\017\112\020\077" +
+            "\113\013\105\014\104\015\111\016\uffba\017\uffba\020\077" +
             "\021\114\023\uffba\026\uffba\036\uffba\037\uffba\040\uffba\061" +
             "\uffba\062\uffba\001\002\000\052\005\uffb6\006\uffb6\007\uffb6" +
             "\010\107\011\102\012\113\013\105\014\104\015\111\016" +
@@ -191,22 +193,22 @@ public class parser extends java_cup.runtime.lr_parser {
             "\uffb3\006\uffb3\007\uffb3\010\uffb3\011\uffb3\012\uffb3\013\uffb3" +
             "\014\uffb3\015\uffb3\016\uffb3\017\uffb3\020\uffb3\021\uffb3\023" +
             "\uffb3\026\uffb3\036\uffb3\037\uffb3\040\uffb3\061\uffb3\062\uffb3" +
-            "\001\002\000\052\005\uffb7\006\uffb7\007\uffb7\010\107\011" +
-            "\102\012\113\013\105\014\104\015\111\016\uffb7\017\uffb7" +
+            "\001\002\000\052\005\103\006\100\007\110\010\107\011" +
+            "\102\012\113\013\105\014\104\015\111\016\101\017\uffb7" +
             "\020\077\021\114\023\uffb7\026\uffb7\036\uffb7\037\uffb7\040" +
-            "\uffb7\061\uffb7\062\uffb7\001\002\000\052\005\uffb0\006\uffb0" +
+            "\uffb7\061\106\062\115\001\002\000\052\005\uffb0\006\uffb0" +
             "\007\uffb0\010\uffb0\011\uffb0\012\uffb0\013\uffb0\014\uffb0\015" +
             "\uffb0\016\uffb0\017\uffb0\020\uffb0\021\uffb0\023\uffb0\026\uffb0" +
             "\036\uffb0\037\uffb0\040\uffb0\061\uffb0\062\uffb0\001\002\000" +
             "\052\005\103\006\100\007\uffbc\010\107\011\102\012\113" +
-            "\013\105\014\104\015\111\016\uffbc\017\112\020\077\021" +
+            "\013\105\014\104\015\111\016\uffbc\017\uffbc\020\077\021" +
             "\114\023\uffbc\026\uffbc\036\uffbc\037\uffbc\040\uffbc\061\uffbc" +
             "\062\uffbc\001\002\000\052\005\uffb5\006\uffb5\007\uffb5\010" +
             "\uffb5\011\uffb5\012\uffb5\013\uffb5\014\uffb5\015\uffb5\016\uffb5" +
             "\017\uffb5\020\uffb5\021\uffb5\023\uffb5\026\uffb5\036\uffb5\037" +
             "\uffb5\040\uffb5\061\uffb5\062\uffb5\001\002\000\052\005\103" +
             "\006\100\007\uffbb\010\107\011\102\012\113\013\105\014" +
-            "\104\015\111\016\uffbb\017\112\020\077\021\114\023\uffbb" +
+            "\104\015\111\016\uffbb\017\uffbb\020\077\021\114\023\uffbb" +
             "\026\uffbb\036\uffbb\037\uffbb\040\uffbb\061\uffbb\062\uffbb\001" +
             "\002\000\052\005\uffb2\006\uffb2\007\uffb2\010\uffb2\011\uffb2" +
             "\012\uffb2\013\uffb2\014\uffb2\015\uffb2\016\uffb2\017\uffb2\020" +
@@ -216,17 +218,17 @@ public class parser extends java_cup.runtime.lr_parser {
             "\016\uffb1\017\uffb1\020\uffb1\021\uffb1\023\uffb1\026\uffb1\036" +
             "\uffb1\037\uffb1\040\uffb1\061\uffb1\062\uffb1\001\002\000\052" +
             "\005\uffbe\006\uffbe\007\uffbe\010\107\011\102\012\113\013" +
-            "\105\014\104\015\111\016\uffbe\017\112\020\077\021\114" +
+            "\105\014\104\015\111\016\uffbe\017\uffbe\020\077\021\114" +
             "\023\uffbe\026\uffbe\036\uffbe\037\uffbe\040\uffbe\061\uffbe\062" +
             "\uffbe\001\002\000\052\005\uffb4\006\uffb4\007\uffb4\010\uffb4" +
             "\011\uffb4\012\uffb4\013\uffb4\014\uffb4\015\uffb4\016\uffb4\017" +
             "\uffb4\020\uffb4\021\uffb4\023\uffb4\026\uffb4\036\uffb4\037\uffb4" +
             "\040\uffb4\061\uffb4\062\uffb4\001\002\000\052\005\103\006" +
             "\100\007\110\010\107\011\102\012\113\013\105\014\104" +
-            "\015\111\016\101\017\112\020\077\021\114\023\uffb8\026" +
+            "\015\111\016\101\017\uffb8\020\077\021\114\023\uffb8\026" +
             "\uffb8\036\uffb8\037\uffb8\040\uffb8\061\106\062\115\001\002" +
             "\000\052\005\uffbd\006\uffbd\007\uffbd\010\107\011\102\012" +
-            "\113\013\105\014\104\015\111\016\uffbd\017\112\020\077" +
+            "\113\013\105\014\104\015\111\016\uffbd\017\uffbd\020\077" +
             "\021\114\023\uffbd\026\uffbd\036\uffbd\037\uffbd\040\uffbd\061" +
             "\uffbd\062\uffbd\001\002\000\052\005\uffb9\006\uffb9\007\uffb9" +
             "\010\107\011\102\012\113\013\105\014\104\015\111\016" +
@@ -257,7 +259,7 @@ public class parser extends java_cup.runtime.lr_parser {
             "\uffad\017\uffad\020\uffad\021\uffad\023\uffad\026\uffad\036\uffad" +
             "\037\uffad\040\uffad\061\uffad\062\uffad\001\002\000\052\005" +
             "\uffaf\006\uffaf\007\uffaf\010\107\011\102\012\113\013\105" +
-            "\014\104\015\111\016\uffaf\017\112\020\077\021\114\023" +
+            "\014\104\015\111\016\uffaf\017\uffaf\020\077\021\114\023" +
             "\uffaf\026\uffaf\036\uffaf\037\uffaf\040\uffaf\061\uffaf\062\uffaf" +
             "\001\002\000\042\005\103\006\100\007\110\010\107\011" +
             "\102\012\113\013\105\014\104\015\111\016\101\017\112" +
@@ -280,16 +282,16 @@ public class parser extends java_cup.runtime.lr_parser {
             "\056\uffdb\057\uffdb\063\uffdb\064\uffdb\001\002\000\004\052" +
             "\165\001\002\000\004\037\166\001\002\000\004\002\ufffd" +
             "\001\002\000\042\005\103\006\100\007\110\010\107\011" +
-    "\102\012\113\013\105\014\104\015\111\016\101\017\112" +
-    "\020\077\021\114\023\170\061\106\062\115\001\002\000" +
-    "\042\022\uffff\024\uffff\025\uffff\042\uffff\043\006\044\014" +
-    "\045\012\046\010\047\013\053\uffff\054\uffff\055\uffff\056" +
-    "\uffff\057\uffff\063\uffff\064\uffff\001\002\000\030\022\051" +
-    "\024\uffe1\025\043\042\uffe1\053\042\054\055\055\046\056" +
-    "\044\057\062\063\061\064\054\001\002\000\006\024\173" +
-    "\042\uffd7\001\002\000\040\022\uffff\025\uffff\042\uffff\043" +
-    "\006\044\014\045\012\046\010\047\013\053\uffff\054\uffff" +
-    "\055\uffff\056\uffff\057\uffff\063\uffff\064\uffff\001\002\000" +
+            "\102\012\113\013\105\014\104\015\111\016\101\017\112" +
+            "\020\077\021\114\023\170\061\106\062\115\001\002\000" +
+            "\042\022\uffff\024\uffff\025\uffff\042\uffff\043\006\044\014" +
+            "\045\012\046\010\047\013\053\uffff\054\uffff\055\uffff\056" +
+            "\uffff\057\uffff\063\uffff\064\uffff\001\002\000\030\022\051" +
+            "\024\uffe1\025\043\042\uffe1\053\042\054\055\055\046\056" +
+            "\044\057\062\063\061\064\054\001\002\000\006\024\173" +
+            "\042\uffd7\001\002\000\040\022\uffff\025\uffff\042\uffff\043" +
+            "\006\044\014\045\012\046\010\047\013\053\uffff\054\uffff" +
+            "\055\uffff\056\uffff\057\uffff\063\uffff\064\uffff\001\002\000" +
     "\004\042\175\001\002\000\004\022\176\001\002\000\004" +
     "\037\uffd8\001\002\000\026\022\051\025\043\042\uffe1\053" +
     "\042\054\055\055\046\056\044\057\062\063\061\064\054" +
@@ -720,12 +722,13 @@ class CUP$parser$actions {
 		ArrayList<InitNode> idListInitNode = (ArrayList<InitNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exprNodeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exprNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		ExprNode exprNode = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 idListInitNode.add(new InitNode(new LeafNode("ID", id),  exprNode,null)); RESULT = idListInitNode; 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("IdListInit",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+              int exprNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+              int exprNoderight = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+              ExprNode exprNode = (ExprNode) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+              idListInitNode.add(new InitNode(new LeafNode("ID", id), exprNode, null));
+              RESULT = idListInitNode;
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("IdListInit", 8, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -856,17 +859,17 @@ class CUP$parser$actions {
             int idleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 8)).left;
             int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 8)).right;
             String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 8)).value;
-            int paramDeclListNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
-		int paramDeclListNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
-		ArrayList<ParamDeclNode> paramDeclListNode = (ArrayList<ParamDeclNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
-		int varDeclListNodeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
-		int varDeclListNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
-		ArrayList<VarDeclNode> varDeclListNode = (ArrayList<VarDeclNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		int statListNodeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
-		int statListNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
-		ArrayList<StatNode> statListNode = (ArrayList<StatNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, null, varDeclListNode, statListNode); 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("Fun",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-9)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            int paramDeclListNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 6)).left;
+            int paramDeclListNoderight = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 6)).right;
+            ArrayList<ParamDeclNode> paramDeclListNode = (ArrayList<ParamDeclNode>) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 6)).value;
+            int varDeclListNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).left;
+            int varDeclListNoderight = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).right;
+            ArrayList<VarDeclNode> varDeclListNode = (ArrayList<VarDeclNode>) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).value;
+            int statListNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)).left;
+            int statListNoderight = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)).right;
+            ArrayList<StatNode> statListNode = (ArrayList<StatNode>) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)).value;
+            RESULT = new FunNode(new LeafNode("ID", id), paramDeclListNode, null, varDeclListNode, statListNode);
+            CUP$parser$result = parser.getSymbolFactory().newSymbol("Fun", 4, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 9)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -1281,12 +1284,13 @@ class CUP$parser$actions {
               ArrayList<ExprNode> RESULT =null;
 		int exprNodeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int exprNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		ExprNode exprNode = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exprListNodeleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exprListNoderight = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		ArrayList<ExprNode> exprListNode = (ArrayList<ExprNode>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		  RESULT = exprListNode; exprListNode.add(exprNode); 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("ExprList",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		ExprNode exprNode = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+              int exprListNodeleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+              int exprListNoderight = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+              ArrayList<ExprNode> exprListNode = (ArrayList<ExprNode>) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+              RESULT = exprListNode;
+              exprListNode.add(exprNode);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("ExprList", 21, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -1421,12 +1425,12 @@ class CUP$parser$actions {
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 68: // Expr ::= Expr MINUS Expr 
-            {
-              ExprNode RESULT =null;
-		int exprNode1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int exprNode1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		ExprNode exprNode1 = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exprNode2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+          {
+            ExprNode RESULT = null;
+            int exprNode1left = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).left;
+            int exprNode1right = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).right;
+            ExprNode exprNode1 = (ExprNode) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+            int exprNode2left = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
 		int exprNode2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		ExprNode exprNode2 = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 RESULT = new BinOpNode("MINUS", exprNode1, exprNode2); 
@@ -1455,12 +1459,12 @@ class CUP$parser$actions {
               ExprNode RESULT =null;
 		int exprNode1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int exprNode1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		ExprNode exprNode1 = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int exprNode2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int exprNode2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		ExprNode exprNode2 = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new BinOpNode("DIV", exprNode1, exprNode2); 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("Expr",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		ExprNode exprNode1 = (ExprNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+              int exprNode2left = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+              int exprNode2right = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+              ExprNode exprNode2 = (ExprNode) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+              RESULT = new BinOpNode("DIV", exprNode1, exprNode2);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("Expr", 20, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 

@@ -61,9 +61,11 @@ public class XMLVisitor implements Visitor {
                 xmlString = "<FunNode> ";
                 xmlString += ((FunNode) node).getLeafNode().accept(this);
                 ArrayList<ParamDeclNode> paramDeclNodes = ((FunNode) node).getParamDeclListNodes();
-                for (ParamDeclNode paramDeclNode : paramDeclNodes) {
-                    if (paramDeclNode != null) {
-                        xmlString += (paramDeclNode).accept(this) + " ";
+                if (paramDeclNodes != null) {
+                    for (ParamDeclNode paramDeclNode : paramDeclNodes) {
+                        if (paramDeclNode != null) {
+                            xmlString += (paramDeclNode).accept(this) + " ";
+                        }
                     }
                 }
                 ArrayList<VarDeclNode> varDeclListNode = ((FunNode) node).getVarDeclListNodeReverse();
