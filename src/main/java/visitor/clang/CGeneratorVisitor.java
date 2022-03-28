@@ -103,6 +103,7 @@ public class CGeneratorVisitor implements Visitor {
         code += "#include <stdlib.h>\n";
         code += "#include <string.h>\n";
         code += "#include <math.h>\n";
+        code += "#include <stdbool.h>\n";
 
         ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
         for (VarDeclNode varDeclNode : varDeclListNode) {
@@ -159,13 +160,15 @@ public class CGeneratorVisitor implements Visitor {
 
             code += "(";
             ArrayList<ParamDeclNode> paramDeclNodes = tmp.getParamDeclListNodes();
-            for (int i = 0; i < paramDeclNodes.size(); i++) {
-                if (paramDeclNodes.get(i) != null) {
-                    if (i == paramDeclNodes.size() - 1) {
-                        paramDeclNodes.get(i).accept(this);
-                    } else {
-                        paramDeclNodes.get(i).accept(this);
-                        code += ", ";
+            if (paramDeclNodes != null) {
+                for (int i = 0; i < paramDeclNodes.size(); i++) {
+                    if (paramDeclNodes.get(i) != null) {
+                        if (i == paramDeclNodes.size() - 1) {
+                            paramDeclNodes.get(i).accept(this);
+                        } else {
+                            paramDeclNodes.get(i).accept(this);
+                            code += ", ";
+                        }
                     }
                 }
             }
@@ -397,33 +400,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(CallFunNode node) throws IOException {
-        System.out.println("CallFunNode");
-        node.getLeafNode().accept(this);
-        code += "(";
-        ArrayList<ExprNode> exprListNode = node.getExprRefsNode();
-        for (int i = 0; i < exprListNode.size(); i++) {
-            if (i == exprListNode.size() - 1) {
-                if (exprListNode.get(i) instanceof OutParNode) {
-                    code += "&";
-                    exprListNode.get(i).accept(this);
-                } else {
-                    exprListNode.get(i).accept(this);
-                }
-
-            } else {
-                if (exprListNode.get(i) instanceof OutParNode) {
-                    code += "&";
-                    exprListNode.get(i).accept(this);
-                    code += ", ";
-                } else {
-                    exprListNode.get(i).accept(this);
-                    code += ", ";
-                }
-            }
-
-        }
-
-        code += ");\n";
+        callFunNodeInvoke(node, true);
     }
 
     public void visit(ConstNode node) throws IOException {
@@ -490,9 +467,17 @@ public class CGeneratorVisitor implements Visitor {
             String newSubstring = firstPart + concatFunction + lastPart;
             newSubstring += "concatStringToString(";
             code = newSubstring;
-            node.getExprNode1().accept(this);
+            if (node.getExprNode1() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode1(), false);
+            } else {
+                node.getExprNode1().accept(this);
+            }
             code += ",";
-            node.getExprNode2().accept(this);
+            if (node.getExprNode2() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode2(), false);
+            } else {
+                node.getExprNode2().accept(this);
+            }
             code += ")";
         } else if (node.getExprNode2().getType() == Sym.REAL) {
             if (!code.contains("concatRealToString")) {
@@ -507,9 +492,17 @@ public class CGeneratorVisitor implements Visitor {
             String newSubstring = firstPart + concatFunction + lastPart;
             newSubstring += "concatRealToString(";
             code = newSubstring;
-            node.getExprNode1().accept(this);
+            if (node.getExprNode1() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode1(), false);
+            } else {
+                node.getExprNode1().accept(this);
+            }
             code += ",";
-            node.getExprNode2().accept(this);
+            if (node.getExprNode2() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode2(), false);
+            } else {
+                node.getExprNode2().accept(this);
+            }
             code += ")";
         } else if (node.getExprNode2().getType() == Sym.INTEGER) {
             if (!code.contains("concatIntegerToString")) {
@@ -524,9 +517,17 @@ public class CGeneratorVisitor implements Visitor {
             String newSubstring = firstPart + concatFunction + lastPart;
             newSubstring += "concatIntegerToString(";
             code = newSubstring;
-            node.getExprNode1().accept(this);
+            if (node.getExprNode1() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode1(), false);
+            } else {
+                node.getExprNode1().accept(this);
+            }
             code += ",";
-            node.getExprNode2().accept(this);
+            if (node.getExprNode2() instanceof CallFunNode) {
+                callFunNodeInvoke((CallFunNode) node.getExprNode2(), false);
+            } else {
+                node.getExprNode2().accept(this);
+            }
             code += ")";
         }
 
@@ -550,6 +551,39 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(LeafNode node) throws IOException {
         code += node.getNameId();
+    }
+
+    public void callFunNodeInvoke(CallFunNode node, boolean comma) throws IOException {
+        node.getLeafNode().accept(this);
+        code += "(";
+        ArrayList<ExprNode> exprListNode = node.getExprRefsNode();
+        for (int i = 0; i < exprListNode.size(); i++) {
+            if (i == exprListNode.size() - 1) {
+                if (exprListNode.get(i) instanceof OutParNode) {
+                    code += "&";
+                    exprListNode.get(i).accept(this);
+                } else {
+                    exprListNode.get(i).accept(this);
+                }
+
+            } else {
+                if (exprListNode.get(i) instanceof OutParNode) {
+                    code += "&";
+                    exprListNode.get(i).accept(this);
+                    code += ", ";
+                } else {
+                    exprListNode.get(i).accept(this);
+                    code += ", ";
+                }
+            }
+
+        }
+        if (comma) {
+            code += ");";
+        } else {
+            code += ")";
+        }
+
     }
 
     private String typeC(int typeMyfun) {

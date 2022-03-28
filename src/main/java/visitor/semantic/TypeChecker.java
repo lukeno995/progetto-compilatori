@@ -83,6 +83,10 @@ public class TypeChecker {
             return Sym.VOID;
         } else if (type1 == Sym.BOOL && type2 == Sym.BOOL) {
             return Sym.VOID;
+        } else if (type1 == Sym.INTEGER && type2 == Sym.BOOL) {
+            return Sym.VOID;
+        } else if (type1 == Sym.BOOL && type2 == Sym.INTEGER) {
+            return Sym.VOID;
         }
         throw new TypeMismatchException("Non è possibile assegnare " + type2 + " a " + type1);
     }
@@ -122,6 +126,8 @@ public class TypeChecker {
         } else if (type1 == Sym.BOOL && type2 == Sym.BOOL) {
             return Sym.BOOL;
         } else if (type1 == Sym.INTEGER && type2 == Sym.BOOL) {
+            return Sym.BOOL;
+        } else if (type1 == Sym.BOOL && type2 == Sym.INTEGER) {
             return Sym.BOOL;
         } else {
             throw new TypeMismatchException("Non possiamo relazionare " + type2 + " e " + type1);
