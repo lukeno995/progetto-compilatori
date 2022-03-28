@@ -100,5 +100,6 @@ gestione del type checking -> TypeCheker.java
 ### CGenerator Visitor
 
 Nella fase di CGenerator siamo andati a visualizzare tutti i nodi e man mano che si entrava nei nodi siamo andati a
-concatenare le stringe necessarie per la generazione del codice.
+concatenare le stringe necessarie per la generazione del codice. Per quanto riguarda la gestione dei booleani sono stati trattati tramite
+l'utilizzo della libreria #include <stdbool.h> perchè il C non gestisce i booleani.
 
