@@ -21,7 +21,7 @@ public class Main {
         ProgramNode programOp = (ProgramNode) p.debug_parse().value;
 //
         XMLVisitor xmlVisitor = new XMLVisitor();
-        System.out.println(programOp.accept(xmlVisitor));
+        //System.out.println(programOp.accept(xmlVisitor));
 
 
         //semantica vistor scope
