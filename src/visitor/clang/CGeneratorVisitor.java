@@ -17,7 +17,7 @@ public class CGeneratorVisitor implements Visitor {
     public CGeneratorVisitor(String fileName) throws IOException {
         fileName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.indexOf("."));
         fileName += ".c";
-        fileName = "" + fileName;
+        fileName = "test_files/c_out/" + fileName;
 
         writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8));
     }
