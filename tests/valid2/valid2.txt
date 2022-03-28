@@ -1,13 +1,13 @@
 fun print_menu(): integer
     integer choose;
     ?. "Scegli l'operazione da svolgere per continuare";
-    ?. '\t(1) Somma di due numeri';
-    ?. '\t(2) Moltiplicazione di due numeri';
-    ?. '\t(3) Divisione intera fra due numeri positivi';
-    ?. '\t(4) Elevamento a potenza';
-    ?. '\t(5) Successione di Fibonacci (ricorsiva)';
-    ?. '\t(6) Successione di Fibonacci (iterativa)';
-    ?. '\t(0) Esci';
+    ?. '(1) Somma di due numeri';
+    ?. '(2) Moltiplicazione di due numeri';
+    ?. '(3) Divisione intera fra due numeri positivi';
+    ?. '(4) Elevamento a potenza';
+    ?. '(5) Successione di Fibonacci (ricorsiva)';
+    ?. '(6) Successione di Fibonacci (iterativa)';
+    ?. '(0) Esci';
     % choose '--> ';
     return choose;
 end fun;

@@ -60,7 +60,7 @@ main
 		risultato := sommac(a, b, @taglia);
 		stampa('la somma di ' & a & ' e ' & b &  ' incrementata di ' & c & ' è ' & taglia);
 		stampa(' ed è pari a ' & risultato);
-		% ans 'vuoi continuare? (si/no):\t';
+		% ans 'vuoi continuare? (si/no):';
 	end loop;
 
 	?. '';
