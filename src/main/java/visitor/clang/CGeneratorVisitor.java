@@ -248,7 +248,7 @@ public class CGeneratorVisitor implements Visitor {
     //PARENT EXPR NODE
     //STATEMENTS NODE (EXPR)
     public void visit(WhileStatNode node) throws IOException {
-        System.out.println("ExprNode");
+        //System.out.println("ExprNode");
         WhileStatNode tmp = node;
         code += "while (";
         if (tmp.getExprNode() != null) {
@@ -270,7 +270,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(IfStatNode node) throws IOException {
-        System.out.println("IfStatNode");
+        //System.out.println("IfStatNode");
         code += "if (";
         node.getExprNode().accept(this);
         code += ") {\n";
@@ -294,7 +294,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(ElseNode node) throws IOException {
-        System.out.println("ElseNode");
+        //System.out.println("ElseNode");
         code += "else {\n";
         ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
         varDeclListNode.stream().forEach(varDeclElem -> {
@@ -310,7 +310,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(AssignStatNode node) throws IOException {
-        System.out.println("AssignStatNode");
+        //System.out.println("AssignStatNode");
         node.getLeafNode().accept(this);
         code += " = ";
         if (node.getExprNode() instanceof CallFunNode) {
@@ -374,7 +374,7 @@ public class CGeneratorVisitor implements Visitor {
 
     public void visit(WriteStatNode node) throws IOException {
         code += "printf(\"";
-        System.out.println("WriteStatNode");
+        //System.out.println("WriteStatNode");
         if (node.getExprNode() instanceof ConstNode) {
             code += ((ConstNode) node.getExprNode()).getValue();
             code += "\\n";
@@ -393,7 +393,7 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(ReturnNode node) throws IOException {
-        System.out.println("ReturnStatNode");
+        //System.out.println("ReturnStatNode");
         code += "return ";
         node.getExprNode().accept(this);
         code += ";\n";
@@ -404,21 +404,21 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(ConstNode node) throws IOException {
-        System.out.println("ConstNode");
+        //System.out.println("ConstNode");
         if (node.getType() != null) {
             typeConst(node.getType(), node.getValue());
         }
     }
 
     public void visit(BinOpNode node) throws IOException {
-        System.out.println("BinOpNode");
+        //System.out.println("BinOpNode");
         node.getExprNode1().accept(this);
         code += typeOperation(node.getName());
         node.getExprNode2().accept(this);
     }
 
     public void visit(RelOpNode node) throws IOException {
-        System.out.println("RelOpNode");
+        //System.out.println("RelOpNode");
         if (node.getExprNode1().getType() == Sym.STRING) {
             code += "strcmp(";
             node.getExprNode1().accept(this);
@@ -439,20 +439,20 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(UnOpNode node) throws IOException {
-        System.out.println("UnaryOpNode");
+        //System.out.println("UnaryOpNode");
         code += typeOperation(node.getName());
         node.getExprNode1().accept(this);
     }
 
     public void visit(OrAndOpNode node) throws IOException {
-        System.out.println("OrAndOpNode");
+        //System.out.println("OrAndOpNode");
         node.getExprNode1().accept(this);
         code += typeOperation(node.getName());
         node.getExprNode2().accept(this);
     }
 
     public void visit(ConcatNode node) throws IOException {
-        System.out.println("ConcatNode");
+        //System.out.println("ConcatNode");
         String concatFunction = "";
         if (node.getExprNode2().getType() == Sym.STRING) {
             if (!code.contains("concatStringToString")) {
@@ -534,13 +534,13 @@ public class CGeneratorVisitor implements Visitor {
     }
 
     public void visit(NotOpNode node) throws IOException {
-        System.out.println("NotOpNode");
+        //System.out.println("NotOpNode");
         code = code + "!";
         node.getExprNode1().accept(this);
     }
 
     public void visit(PowOpNode node) throws IOException {
-        System.out.println("PowOpNode");
+        //System.out.println("PowOpNode");
         code = code + "pow(";
         node.getExprNode1().accept(this);
         code = code + " , ";
