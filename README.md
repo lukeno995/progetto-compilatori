@@ -4,24 +4,22 @@ In questo progetto, è stato prodotto un compilatore completo che prenda in inpu
 programma C.
 
 ## Download e Guida
-
 ### Download
 
 - [Intellij Community Edition](https://www.jetbrains.com/idea/download/#section=windows)
 - [JFlex](https://jflex.de/download.html)
 - [Cup](http://www2.cs.tum.edu/projects/cup/install.php)
-- 
 
 ### Plugin Intellij
 
 - In IntelliJ -> Andare in Preferences/Plugin ]
 - In IntelliJ -> Ricercare "Grammar-Kit" ed attivarlo (permette di semplificare editing in IntelliJ di specifiche jflex)
 
+### SDK Progetto
 
-### Project SDK e Project Language Level
-Project SDK: 16 version (16.0.2)
+Project SDK: 17 version (17.0.2)
 
-Project Language Level: SDK Default(16 - Records,patterns, local enums and interfaces)
+Project Language Level: SDK Default(17 - corretto)
 
 ### Guida configurazione JFlex
 
