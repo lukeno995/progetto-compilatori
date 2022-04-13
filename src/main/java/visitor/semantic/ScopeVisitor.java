@@ -82,22 +82,32 @@ public class ScopeVisitor implements Visitor {
         if (node.getTypeVar() != null) {
             String typeVar = node.getTypeVar();
             type = InferenceType.inferenceType(typeVar);
-        } else {
-            String typeVar = node.getInitNodes().get(0).getConstant().getNameID();
-            type = InferenceType.inferenceType(typeVar);
-        }
-
-        ArrayList<InitNode> initNodeArrayList = node.getInitNodes();
-        for (InitNode tmp : initNodeArrayList) {
-            //prendo l'id della variabile
-            String varSymbol = tmp.getLeafNode().getNameId();
-            //controllo se è già presente
-            if (stackScope.peek().containsKey(varSymbol)) {
-                throw new Error("Identificatore già dichiarato all'interno dello scope: " + varSymbol);
+            ArrayList<InitNode> initNodeArrayList = node.getInitNodes();
+            for (InitNode tmp : initNodeArrayList) {
+                //prendo l'id della variabile
+                String varSymbol = tmp.getLeafNode().getNameId();
+                //controllo se è già presente
+                if (stackScope.peek().containsKey(varSymbol)) {
+                    throw new Error("Identificatore già dichiarato all'interno dello scope: " + varSymbol);
+                }
+                //aggiungo la variabile alla tabella
+                RecordTable symbolTableRecord = new RecordTable(varSymbol, "var", type);
+                stackScope.peek().put(varSymbol, symbolTableRecord);
             }
-            //aggiungo la variabile alla tabella
-            RecordTable symbolTableRecord = new RecordTable(varSymbol, "var", type);
-            stackScope.peek().put(varSymbol, symbolTableRecord);
+        } else {
+            ArrayList<InitNode> initNodeArrayList = node.getInitNodes();
+            for (InitNode tmp : initNodeArrayList) {
+                //prendo l'id della variabile
+                String varSymbol = tmp.getLeafNode().getNameId();
+                //controllo se è già presente
+                if (stackScope.peek().containsKey(varSymbol)) {
+                    throw new Error("Identificatore già dichiarato all'interno dello scope: " + varSymbol);
+                }
+                //aggiungo la variabile alla tabella
+                type = InferenceType.inferenceType(tmp.getConstant().getNameID());
+                RecordTable symbolTableRecord = new RecordTable(varSymbol, "var", type);
+                stackScope.peek().put(varSymbol, symbolTableRecord);
+            }
         }
 
         node.setType(type);

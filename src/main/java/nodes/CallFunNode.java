@@ -26,7 +26,6 @@ public class CallFunNode extends StatNode{
         return exprRefsNode;
     }
     public ArrayList<ExprNode> getExprRefsNode() {
-        Collections.reverse(exprRefsNode);
         return exprRefsNode;
     }
 
