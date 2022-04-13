@@ -1,5 +1,7 @@
 package util;
 
+import symbol.Sym;
+
 import java.util.List;
 
 
@@ -9,8 +11,8 @@ public class RecordTable {
     private int type;   // int, bool, string, etc. --> valore del sym
     private String scope;  // global, local, etc.
 
-    private List<String> params;
-    private String returnType;
+    private List<Integer> params;
+    private int returnType;
 
     public RecordTable(String scope) {
         this.scope = scope;
@@ -24,7 +26,7 @@ public class RecordTable {
     }
 
     // case fun
-    public RecordTable(String symbol, String kind, List<String> paramsType, String returnType) {
+    public RecordTable(String symbol, String kind, List<Integer> paramsType, int returnType) {
         this.symbolName = symbol;
         this.kind = kind;
         this.params = paramsType;
@@ -32,43 +34,11 @@ public class RecordTable {
     }
 
     // case fun no return
-    public RecordTable(String symbol, String kind, List<String> paramsType) {
+    public RecordTable(String symbol, String kind, List<Integer> paramsType) {
         this.symbolName = symbol;
         this.kind = kind;
         this.params = paramsType;
-        this.returnType = "VOID";
-    }
-
-    @Override
-    public String toString() {
-        if (kind != null) {
-            if (kind.equalsIgnoreCase("var")) {
-                return "SymbolTableRecord{" +
-                        "symbol='" + symbolName + '\'' +
-                        ", kind='" + kind + '\'' +
-                        ", varType=" + type +
-                        '}';
-            } else if (kind.equalsIgnoreCase("fun")) {
-                String tmpParams = "";
-                String tmpReturn = "";
-                if (params != null) {
-                    for (String tmp : params) {
-                        tmpParams += tmp;
-                    }
-                }
-                if (returnType != null) {
-                    tmpReturn += returnType + " ";
-                }
-
-                return "SymbolTableRecord{" +
-                        "symbol='" + symbolName + '\'' +
-                        ", kind='" + kind + '\'' +
-                        ", paramsType=" + tmpParams +
-                        ", returnType=" + tmpReturn +
-                        '}';
-            }
-        }
-        return null;
+        this.returnType = Sym.VOID;
     }
 
     public String getSymbolName() {
@@ -103,19 +73,19 @@ public class RecordTable {
         this.scope = scope;
     }
 
-    public List<String> getParams() {
+    public List<Integer> getParams() {
         return params;
     }
 
-    public void setParams(List<String> params) {
+    public void setParams(List<Integer> params) {
         this.params = params;
     }
 
-    public String getReturnType() {
+    public int getReturnType() {
         return returnType;
     }
 
-    public void setReturnType(String returnType) {
+    public void setReturnType(int returnType) {
         this.returnType = returnType;
     }
 }

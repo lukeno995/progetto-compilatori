@@ -8,6 +8,7 @@ import visitor.xml.AbstractSyntaxNode;
 import visitor.xml.Visitor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class ScopeVisitor implements Visitor {
@@ -115,22 +116,29 @@ public class ScopeVisitor implements Visitor {
             type = InferenceType.inferenceType(node.getTypeVar());
         }
         FunNode tmp = node;
+
         String funName = node.getLeafNode().getNameId();
         if (!symbolTableTemp.containsKey(funName)) {
-            RecordTable symbolTableRecord = new RecordTable(funName, "fun", type);
-            symbolTableTemp.put(funName, symbolTableRecord);
+
             symbolTable = new SymbolTable();
             symbolTable.put(node.getClass().getName(), new RecordTable(funName));
             stackScope.add(symbolTable);
 
             ArrayList<ParamDeclNode> paramDeclListNode = node.getParamDeclListNodes();
+            List<Integer> paramsType = new ArrayList<>();
             if (paramDeclListNode != null) {
+
+
                 for (ParamDeclNode paramDeclNode : paramDeclListNode) {
                     if (paramDeclNode != null) {
                         paramDeclNode.accept(this);
+                        paramsType.add(paramDeclNode.getType());
                     }
                 }
             }
+
+            RecordTable symbolTableRecord = new RecordTable(funName, "fun", paramsType, type);
+            symbolTableTemp.put(funName, symbolTableRecord);
 
             ArrayList<VarDeclNode> varDeclListNode = node.getVarDeclListNode();
             for (VarDeclNode varDeclNode : varDeclListNode) {

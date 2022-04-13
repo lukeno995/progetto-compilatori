@@ -11,6 +11,7 @@ import visitor.xml.AbstractSyntaxNode;
 import visitor.xml.Visitor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class SemanticVisitor implements Visitor {
@@ -49,7 +50,11 @@ public class SemanticVisitor implements Visitor {
         } else if (ast instanceof ReturnNode) {
             visitReturnNode((ReturnNode) ast);
         } else if (ast instanceof CallFunNode) {
-            visitCallFunNode((CallFunNode) ast);
+            try {
+                visitCallFunNode((CallFunNode) ast);
+            } catch (UndeclaredVariableException e) {
+                e.printStackTrace();
+            }
         } else if (ast instanceof BinOpNode) {
             try {
                 visitBinOpNode((BinOpNode) ast);
@@ -184,7 +189,7 @@ public class SemanticVisitor implements Visitor {
 
     void visitLeafNode(LeafNode ast) throws UndeclaredVariableException {
         String idName = ast.getNameId();
-        int type = lookup(idName);
+        int type = lookup(idName).getType();
         ast.setType(type);
     }
 
@@ -207,16 +212,29 @@ public class SemanticVisitor implements Visitor {
     }
 
 
-    void visitCallFunNode(CallFunNode ast) {
+    void visitCallFunNode(CallFunNode ast) throws UndeclaredVariableException {
         LeafNode nodeLeaf = ast.getLeafNode();
         nodeLeaf.accept(this);
-        ast.setType(nodeLeaf.getType());
+        List<Integer> exprTypes = new ArrayList<>();
         for (ExprNode exprNode : ast.getExprRefsNode()) {
             if (exprNode != null) {
                 exprNode.accept(this);
+                exprTypes.add(exprNode.getType());
             }
         }
-        //ast.setType(type);
+        RecordTable recordTable = lookup(nodeLeaf.getNameId());
+        List<Integer> paramsType = recordTable.getParams();
+        if (exprTypes.size() != paramsType.size()) {
+            ast.setType(Sym.error);
+            throw new Error("I parametri passati alla funzione " + nodeLeaf.getNameId() + " non sono uguali al numero di parametri con cui è stat definita");
+        }
+        for (int i = 0; i < exprTypes.size(); i++) {
+            if (exprTypes.get(i) != paramsType.get(i) && !((exprTypes.get(i) == Sym.INTEGER) && (paramsType.get(i) == Sym.REAL))) {
+                ast.setType(Sym.error);
+                throw new Error("Type missmatch per l'argomento " + i + " della funzione " + nodeLeaf.getNameId());
+            }
+        }
+        ast.setType(recordTable.getReturnType());
     }
 
     void visitReturnNode(ReturnNode ast) {
@@ -259,12 +277,12 @@ public class SemanticVisitor implements Visitor {
     }
 
 
-    private int lookup(String idName) throws UndeclaredVariableException {
+    private RecordTable lookup(String idName) throws UndeclaredVariableException {
         Stack<SymbolTable> stack = (Stack) stackScope.clone();
         while (!stack.isEmpty()) {
             SymbolTable symbolTable = stack.pop();
             if (symbolTable.containsKey(idName)) {
-                return symbolTable.get(idName).getType();
+                return symbolTable.get(idName);
             }
         }
         throw new UndeclaredVariableException(idName);
